@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView current, txtTime, income, outcome;
     private int year, month, day;
     private DBHelper db;
+    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements
 
         income.setOnClickListener(l -> dialog(true));
         outcome.setOnClickListener(l -> dialog(false));
-        txtTime.setOnClickListener(l -> setTime());
+        txtTime.setOnClickListener(l -> {
+            setTime();
+            txtTime.setText(time);
+        });
 
     }
 
@@ -130,8 +134,7 @@ public class MainActivity extends AppCompatActivity implements
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute);
         long alarmTime = calendar.getTimeInMillis();
-        String time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(alarmTime));
-        txtTime.setText(time);
+        time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(alarmTime));
     }
 
 }
