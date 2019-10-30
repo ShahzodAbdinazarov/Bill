@@ -7,4 +7,6 @@
     <string name="msgOut">Введите потраченную сумму</string>
     <string name="now">сейчас</string>
     <string name="first">первый раз</string>
+    <string name="money">деньги</string>
+    <string name="info">комментарий</string>
 </resources>

@@ -6,4 +6,6 @@
     <string name="msgOut">Sarflangan miqdorni kiriting</string>
     <string name="first">birinchi vaqt</string>
     <string name="now">Hozir</string>
+    <string name="money">Mablag\'</string>
+    <string name="info">Izoh</string>
 </resources>

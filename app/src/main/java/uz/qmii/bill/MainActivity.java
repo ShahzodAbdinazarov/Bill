@@ -2,16 +2,18 @@ package uz.qmii.bill;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.text.InputType;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DateFormat;
@@ -24,12 +26,13 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    int money;
     private ListView history;
     private TextView current, income, outcome, from, to, setText;
     private int year, month, day, hour, minute;
     private DBHelper db;
     private long selectTime = Calendar.getInstance().getTimeInMillis();
+    private long fromTime = 0;
+    private long toTime = Calendar.getInstance().getTimeInMillis() + Calendar.getInstance().getTimeInMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +49,19 @@ public class MainActivity extends AppCompatActivity implements
 
         refresh();
 
-        income.setOnClickListener(l -> dialog(true));
-        outcome.setOnClickListener(l -> dialog(false));
+        income.setOnClickListener(l -> showDialog(true));
+        outcome.setOnClickListener(l -> showDialog(false));
         from.setOnClickListener(l -> {
             setTime();
             setSetText(from);
+            fromTime = selectTime;
+            refresh();
         });
         to.setOnClickListener(l -> {
             setTime();
             setSetText(to);
+            toTime = selectTime;
+            refresh();
         });
 
     }
@@ -63,49 +70,58 @@ public class MainActivity extends AppCompatActivity implements
         this.setText = setText;
     }
 
-    void dialog(boolean isIncome) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    public void showDialog(boolean is) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
 
-        final EditText edt = new EditText(this);
-        edt.setInputType(InputType.TYPE_CLASS_NUMBER);
+        ImageView icon = dialog.findViewById(R.id.dialogImage);
+        if (is) icon.setImageResource(R.drawable.up);
+        else icon.setImageResource(R.drawable.down);
 
-        if (isIncome) alert.setIcon(R.drawable.up);
-        else alert.setIcon(R.drawable.down);
+        TextView title = dialog.findViewById(R.id.dialogTitle);
+        if (is) title.setText(R.string.msgIn);
+        else title.setText(R.string.msgOut);
 
-        if (isIncome) alert.setTitle(R.string.msgIn);
-        else alert.setTitle(R.string.msgOut);
+        EditText dialogMoney = dialog.findViewById(R.id.dialogMoney);
 
-        alert.setView(edt);
+        TextView dialogTime = dialog.findViewById(R.id.dialogTime);
+        dialogTime.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+                DateFormat.SHORT).format(new Date(Calendar.getInstance().getTimeInMillis())));
 
-        alert.setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-            String text = edt.getText().toString();
-            if (text.length() > 0) {
-                History history;
-                if (isIncome) {
-                    money += Integer.parseInt(text);
-                    history = new History(1, Integer.parseInt(text), selectTime, "aachen auriga ankara knelling", true);
-                } else {
-                    money -= Integer.parseInt(text);
-                    history = new History(1, Integer.parseInt(text), selectTime, "ian qingdao nosebag shrugging", false);
-                }
+        selectTime = Calendar.getInstance().getTimeInMillis();
+
+        dialogTime.setOnClickListener(l -> {
+            setTime();
+            setSetText(dialogTime);
+        });
+
+        EditText dialogInfo = dialog.findViewById(R.id.dialogInfo);
+
+        Button dialogButton = dialog.findViewById(R.id.dialogOK);
+        dialogButton.setOnClickListener(v -> {
+            double money = Double.parseDouble(dialogMoney.getText().toString());
+            String info = dialogInfo.getText().toString();
+            if (dialogMoney.getText().toString().length() > 0) {
+                History history = new History(1, money, selectTime, info, is);
                 db.add(history);
                 refresh();
             }
             dialog.dismiss();
         });
 
-        alert.setNegativeButton(android.R.string.no, (dialog, whichButton) -> dialog.dismiss());
+        dialog.show();
 
-        alert.show();
     }
 
     private void refresh() {
-        Double in = db.getIncome(true);
+        Double in = db.getIncome(fromTime, toTime, true);
         NumberFormat decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         String txtMoney = decimalFormat.format(in);
         income.setText(txtMoney);
 
-        Double out = db.getIncome(false);
+        Double out = db.getIncome(fromTime, toTime, false);
         decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         txtMoney = decimalFormat.format(out);
         outcome.setText(txtMoney);
@@ -115,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements
         txtMoney = decimalFormat.format(number);
         current.setText(txtMoney);
 
-        HistoryAdapter adapter = new HistoryAdapter(this, db.getAll());
+        HistoryAdapter adapter = new HistoryAdapter(this, db.getAll(fromTime, toTime));
         history.setAdapter(adapter);
     }
 

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,7 +64,8 @@ public class HistoryAdapter extends BaseAdapter {
         String money = decimalFormat.format(number);
 
         txtMoney.setText(money);
-        txtTime.setText(data.get(position).getTime());
+        txtTime.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+                .format(new Date(data.get(position).getTime())));
 
         root.setOnClickListener(l -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);

@@ -7,4 +7,6 @@
     <string name="msgOut">Enter the amount spent</string>
     <string name="now">Now</string>
     <string name="first">First time</string>
+    <string name="money">money</string>
+    <string name="info">footnote</string>
 </resources>

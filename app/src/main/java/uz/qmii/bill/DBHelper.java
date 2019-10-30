@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    SQLiteDatabase db;
+    private SQLiteDatabase db;
 
     DBHelper(Context context) {
         super(context, "Bill", null, 1);
@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     void add(History history) {
         ContentValues values = new ContentValues();
         values.put("money", String.valueOf(history.getMoney()));
-        values.put("time", history.getTime());
+        values.put("time", String.valueOf(history.getTime()));
         values.put("info", history.getInfo());
         values.put("isIncome", history.isIncome() ? 1 : 0);
 
@@ -48,20 +48,22 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Recycle")
-    List<History> getAll() {
+    List<History> getAll(long fromTime, long totime) {
         List<History> data = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM History", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 History history = new History();
 
                 history.setId(cursor.getInt(0));
                 history.setMoney(Double.parseDouble(cursor.getString(1)));
-                history.setTime(cursor.getString(2));
+                history.setTime(Long.parseLong(cursor.getString(2)));
                 history.setInfo(cursor.getString(3));
                 history.setIncome(cursor.getInt(4) == 1);
 
-                data.add(history);
+                if (fromTime < Long.parseLong(cursor.getString(2)) &&
+                        totime > Long.parseLong(cursor.getString(2)))
+                    data.add(history);
             } while (cursor.moveToNext());
         }
         Objects.requireNonNull(cursor).close();
@@ -72,13 +74,15 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("History", "id = ?", new String[]{String.valueOf(id)});
     }
 
-    public double getIncome(boolean is){
+    double getIncome(long fromTime, long totime, boolean is) {
         double income = 0;
         Cursor cursor = db.rawQuery("SELECT * FROM History", null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (is == (cursor.getInt(4) == 1))
-                income += Double.parseDouble(cursor.getString(1));
+                if (is == (cursor.getInt(4) == 1) &&
+                        fromTime < Long.parseLong(cursor.getString(2)) &&
+                        totime > Long.parseLong(cursor.getString(2)))
+                    income += Double.parseDouble(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         Objects.requireNonNull(cursor).close();
