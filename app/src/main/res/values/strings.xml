@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hisob</string>
+    <string name="time">Hamma vaqt</string>
+    <string name="delete">O\'chirmoqchimisiz?</string>
+    <string name="msgIn">Kirimni kiriting</string>
+    <string name="msgOut">Sarflangan miqdorni kiriting</string>
+</resources>
