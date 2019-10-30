@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements
 
     int money;
     private ListView history;
-    private TextView current, txtTime, income, outcome;
-    private int year, month, day;
+    private TextView current, income, outcome, from, to, setText;
+    private int year, month, day, hour, minute;
     private DBHelper db;
-    private String time;
+    private long selectTime = Calendar.getInstance().getTimeInMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +39,28 @@ public class MainActivity extends AppCompatActivity implements
         current = findViewById(R.id.current);
         income = findViewById(R.id.income);
         outcome = findViewById(R.id.outcome);
-        txtTime = findViewById(R.id.txtTime);
         history = findViewById(R.id.history);
+        from = findViewById(R.id.from);
+        to = findViewById(R.id.to);
         db = new DBHelper(this);
 
         refresh();
 
         income.setOnClickListener(l -> dialog(true));
         outcome.setOnClickListener(l -> dialog(false));
-        txtTime.setOnClickListener(l -> {
+        from.setOnClickListener(l -> {
             setTime();
-            txtTime.setText(time);
+            setSetText(from);
+        });
+        to.setOnClickListener(l -> {
+            setTime();
+            setSetText(to);
         });
 
+    }
+
+    public void setSetText(TextView setText) {
+        this.setText = setText;
     }
 
     void dialog(boolean isIncome) {
@@ -74,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements
                 History history;
                 if (isIncome) {
                     money += Integer.parseInt(text);
-                    history = new History(1, Integer.parseInt(text), "14:00", "aachen auriga ankara knelling", true);
+                    history = new History(1, Integer.parseInt(text), selectTime, "aachen auriga ankara knelling", true);
                 } else {
                     money -= Integer.parseInt(text);
-                    history = new History(1, Integer.parseInt(text), "16:00", "ian qingdao nosebag shrugging", false);
+                    history = new History(1, Integer.parseInt(text), selectTime, "ian qingdao nosebag shrugging", false);
                 }
                 db.add(history);
                 refresh();
@@ -123,6 +132,10 @@ public class MainActivity extends AppCompatActivity implements
         this.year = year;
         this.month = month;
         this.day = dayOfMonth;
+        popTimePicker();
+    }
+
+    private void popTimePicker() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -131,10 +144,17 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        this.hour = hourOfDay;
+        this.minute = minute;
+        selectTime = getTimeFromPicker();
+        String time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(selectTime));
+        setText.setText(time);
+    }
+
+    private long getTimeFromPicker() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hourOfDay, minute);
-        long alarmTime = calendar.getTimeInMillis();
-        time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(alarmTime));
+        calendar.set(year, month, day, hour, minute);
+        return calendar.getTimeInMillis();
     }
 
 }

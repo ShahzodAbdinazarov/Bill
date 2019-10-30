@@ -5,4 +5,6 @@
     <string name="delete">Do you want to delete it?</string>
     <string name="msgIn">Enter profit</string>
     <string name="msgOut">Enter the amount spent</string>
+    <string name="now">Now</string>
+    <string name="first">First time</string>
 </resources>

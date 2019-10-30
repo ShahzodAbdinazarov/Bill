@@ -4,4 +4,6 @@
     <string name="delete">O\'chirmoqchimisiz?</string>
     <string name="msgIn">Kirimni kiriting</string>
     <string name="msgOut">Sarflangan miqdorni kiriting</string>
+    <string name="first">birinchi vaqt</string>
+    <string name="now">Hozir</string>
 </resources>

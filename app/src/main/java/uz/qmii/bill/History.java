@@ -1,16 +1,17 @@
 package uz.qmii.bill;
 
-public class History {
+class History {
 
     private int id;
     private double money;
-    private String time, info;
+    private long time;
+    private String info;
     boolean isIncome;
 
     History() {
     }
 
-    History(int id, int money, String time, String info, boolean isIncome) {
+    History(int id, double money, long time, String info, boolean isIncome) {
         this.id = id;
         this.money = money;
         this.time = time;
@@ -30,15 +31,15 @@ public class History {
         return money;
     }
 
-    void setMoney(Double money) {
+    void setMoney(double money) {
         this.money = money;
     }
 
-    String getTime() {
+    long getTime() {
         return time;
     }
 
-    void setTime(String time) {
+    void setTime(long time) {
         this.time = time;
     }
 
