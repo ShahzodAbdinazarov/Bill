@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements
     int money;
     private ListView history;
     private TextView current, txtTime, income, outcome;
-    private int year, month, day, hour, minute;
+    private int year, month, day;
     private DBHelper db;
 
     @Override
@@ -119,10 +119,6 @@ public class MainActivity extends AppCompatActivity implements
         this.year = year;
         this.month = month;
         this.day = dayOfMonth;
-        popTimePicker();
-    }
-
-    private void popTimePicker() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -131,17 +127,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        this.hour = hourOfDay;
-        this.minute = minute;
-        long alarmTime = getTimeFromPicker();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hourOfDay, minute);
+        long alarmTime = calendar.getTimeInMillis();
         String time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(alarmTime));
         txtTime.setText(time);
-    }
-
-    private long getTimeFromPicker() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hour, minute);
-        return calendar.getTimeInMillis();
     }
 
 }
