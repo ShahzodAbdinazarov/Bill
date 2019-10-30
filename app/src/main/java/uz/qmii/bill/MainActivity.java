@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements
 
         income.setOnClickListener(l -> dialog(true));
         outcome.setOnClickListener(l -> dialog(false));
-        txtTime.setOnClickListener(l -> setSignal());
+        txtTime.setOnClickListener(l -> setTime());
 
     }
 
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements
         history.setAdapter(adapter);
     }
 
-    private void setSignal() {
+    private void setTime() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
