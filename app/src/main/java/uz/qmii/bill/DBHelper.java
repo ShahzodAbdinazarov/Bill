@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Recycle")
-    List<History> getAll(long fromTime, long totime) {
+    List<History> getAll(long fromTime, long toTime) {
         List<History> data = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null);
         if (cursor != null && cursor.moveToFirst()) {
@@ -61,8 +62,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 history.setInfo(cursor.getString(3));
                 history.setIncome(cursor.getInt(4) == 1);
 
+                Log.e("\t\t\tFromTime\t\t\t", String.valueOf(fromTime));
+                Log.e("\t\t\tBaseTime\t\t\t", cursor.getString(2));
+                Log.e("\t\t\tToTime  \t\t\t", String.valueOf(toTime));
+
                 if (fromTime < Long.parseLong(cursor.getString(2)) &&
-                        totime > Long.parseLong(cursor.getString(2)))
+                        toTime > Long.parseLong(cursor.getString(2)))
                     data.add(history);
             } while (cursor.moveToNext());
         }
@@ -74,14 +79,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("History", "id = ?", new String[]{String.valueOf(id)});
     }
 
-    double getIncome(long fromTime, long totime, boolean is) {
+    double getIncome(long fromTime, long toTime, boolean is) {
         double income = 0;
         Cursor cursor = db.rawQuery("SELECT * FROM History", null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 if (is == (cursor.getInt(4) == 1) &&
                         fromTime < Long.parseLong(cursor.getString(2)) &&
-                        totime > Long.parseLong(cursor.getString(2)))
+                        toTime > Long.parseLong(cursor.getString(2)))
                     income += Double.parseDouble(cursor.getString(1));
             } while (cursor.moveToNext());
         }

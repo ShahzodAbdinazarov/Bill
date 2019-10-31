@@ -85,6 +85,7 @@ public class HistoryAdapter extends BaseAdapter {
             alert.setMessage(R.string.delete);
             alert.setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
                 db.delete(data.get(position).getId());
+                new MainActivity().recreate();
                 dialog.dismiss();
             });
             alert.setNegativeButton(android.R.string.no, (dialog, whichButton) -> dialog.dismiss());

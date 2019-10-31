@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView current, income, outcome, from, to, setText;
     private int year, month, day, hour, minute;
     private DBHelper db;
-    private long selectTime = Calendar.getInstance().getTimeInMillis();
-    private long fromTime = 0;
+    private long fromTime = 0, selectTime = Calendar.getInstance().getTimeInMillis();
     private long toTime = Calendar.getInstance().getTimeInMillis() + Calendar.getInstance().getTimeInMillis();
 
     @Override
@@ -54,14 +53,10 @@ public class MainActivity extends AppCompatActivity implements
         from.setOnClickListener(l -> {
             setTime();
             setSetText(from);
-            fromTime = selectTime;
-            refresh();
         });
         to.setOnClickListener(l -> {
             setTime();
             setSetText(to);
-            toTime = selectTime;
-            refresh();
         });
 
     }
@@ -101,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements
 
         Button dialogButton = dialog.findViewById(R.id.dialogOK);
         dialogButton.setOnClickListener(v -> {
-            double money = Double.parseDouble(dialogMoney.getText().toString());
-            String info = dialogInfo.getText().toString();
             if (dialogMoney.getText().toString().length() > 0) {
+                double money = Double.parseDouble(dialogMoney.getText().toString());
+                String info = dialogInfo.getText().toString();
                 History history = new History(1, money, selectTime, info, is);
                 db.add(history);
                 refresh();
@@ -165,6 +160,12 @@ public class MainActivity extends AppCompatActivity implements
         selectTime = getTimeFromPicker();
         String time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(selectTime));
         setText.setText(time);
+        if (setText == from) {
+            fromTime = selectTime;
+        } else if (setText == to) {
+            toTime = selectTime;
+        }
+        refresh();
     }
 
     private long getTimeFromPicker() {
