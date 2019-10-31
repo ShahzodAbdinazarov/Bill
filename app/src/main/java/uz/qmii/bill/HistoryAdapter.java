@@ -1,6 +1,7 @@
 package uz.qmii.bill;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +20,16 @@ import java.util.Locale;
 
 public class HistoryAdapter extends BaseAdapter {
 
-    private Context context;
+    private Activity activity;
     private List<History> data;
     private LayoutInflater inflater;
     private DBHelper db;
 
-    HistoryAdapter(Context context, List<History> data) {
-        this.context = context;
+    HistoryAdapter(Activity activity, List<History> data) {
+        this.activity = activity;
         this.data = data;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        db = new DBHelper(context);
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        db = new DBHelper(activity);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class HistoryAdapter extends BaseAdapter {
                 .format(new Date(data.get(position).getTime())));
 
         root.setOnClickListener(l -> {
-            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
             alert.setTitle(money);
             if (data.get(position).isIncome) alert.setIcon(R.drawable.up);
             else alert.setIcon(R.drawable.down);
@@ -78,14 +79,14 @@ public class HistoryAdapter extends BaseAdapter {
         });
 
         root.setOnLongClickListener(l -> {
-            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
             alert.setTitle(money);
             if (data.get(position).isIncome) alert.setIcon(R.drawable.up);
             else alert.setIcon(R.drawable.down);
             alert.setMessage(R.string.delete);
             alert.setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
                 db.delete(data.get(position).getId());
-                new MainActivity().recreate();
+                activity.recreate();
                 dialog.dismiss();
             });
             alert.setNegativeButton(android.R.string.no, (dialog, whichButton) -> dialog.dismiss());
