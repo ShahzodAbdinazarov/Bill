@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -55,11 +56,28 @@ public class HistoryAdapter extends BaseAdapter {
         ImageView rowImage = root.findViewById(R.id.rowImage);
         TextView txtMoney = root.findViewById(R.id.txtMoney);
         TextView txtTime = root.findViewById(R.id.txtTime);
-
-        if (data.get(position).isIncome) {
-            rowImage.setImageResource(R.drawable.up);
+        switch (data.get(position).getType()) {
+            case 0:
+                rowImage.setImageResource(R.drawable.down);
+                break;
+            case 1:
+                rowImage.setImageResource(R.drawable.up);
+                break;
+            case 2:
+                rowImage.setImageResource(R.drawable.ic_borrow);
+                break;
+            case 3:
+                rowImage.setImageResource(R.drawable.ic_borrow_back);
+                break;
+            case 4:
+                rowImage.setImageResource(R.drawable.ic_lend);
+                break;
+            case 5:
+                rowImage.setImageResource(R.drawable.ic_lend_back);
+                break;
+            default:
+                break;
         }
-
         Double number = data.get(position).getMoney();
         NumberFormat decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         String money = decimalFormat.format(number);
@@ -68,21 +86,33 @@ public class HistoryAdapter extends BaseAdapter {
         txtTime.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
                 .format(new Date(data.get(position).getTime())));
 
-        root.setOnClickListener(l -> {
-            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-            alert.setTitle(money);
-            if (data.get(position).isIncome) alert.setIcon(R.drawable.up);
-            else alert.setIcon(R.drawable.down);
-            alert.setMessage(data.get(position).getInfo());
-            alert.setPositiveButton(android.R.string.ok, (dialog, whichButton) -> dialog.dismiss());
-            alert.show();
-        });
+        root.setOnClickListener(l -> Toast.makeText(activity, data.get(position).getInfo(), Toast.LENGTH_SHORT).show());
 
         root.setOnLongClickListener(l -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(activity);
             alert.setTitle(money);
-            if (data.get(position).isIncome) alert.setIcon(R.drawable.up);
-            else alert.setIcon(R.drawable.down);
+            switch (data.get(position).getType()) {
+                case 0:
+                    alert.setIcon(R.drawable.down);
+                    break;
+                case 1:
+                    alert.setIcon(R.drawable.up);
+                    break;
+                case 2:
+                    alert.setIcon(R.drawable.ic_borrow);
+                    break;
+                case 3:
+                    alert.setIcon(R.drawable.ic_borrow_back);
+                    break;
+                case 4:
+                    alert.setIcon(R.drawable.ic_lend);
+                    break;
+                case 5:
+                    alert.setIcon(R.drawable.ic_lend_back);
+                    break;
+                default:
+                    break;
+            }
             alert.setMessage(R.string.delete);
             alert.setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
                 db.delete(data.get(position).getId());

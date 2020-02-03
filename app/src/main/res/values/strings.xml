@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hisob</string>
+    <string name="app_name" translatable="false">Hisob</string>
     <string name="time">Hamma vaqt</string>
     <string name="delete">O\'chirmoqchimisiz?</string>
     <string name="msgIn">Kirimni kiriting</string>
@@ -8,4 +8,13 @@
     <string name="now">Hozir</string>
     <string name="money">Mablag\'</string>
     <string name="info">Izoh</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="loading">Yuklanmoqda…</string>
+    <string name="title_bill_type">Hisob turi</string>
+    <string name="income">Kirim</string>
+    <string name="outgoing">Chiqim</string>
+    <string name="borrow">Qarz olish</string>
+    <string name="borrow_back">Qarzni qaytarish</string>
+    <string name="lend">Qarz berish</string>
+    <string name="lend_back">Qarzni qaytarib olish</string>
 </resources>

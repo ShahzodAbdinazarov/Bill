@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="time">All time</string>
-    <string name="app_name">Bill</string>
     <string name="delete">Do you want to delete it?</string>
     <string name="msgIn">Enter profit</string>
     <string name="msgOut">Enter the amount spent</string>
@@ -9,4 +8,5 @@
     <string name="first">First time</string>
     <string name="money">money</string>
     <string name="info">note</string>
+    <string name="loading">Loading…</string>
 </resources>

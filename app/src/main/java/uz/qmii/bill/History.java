@@ -6,17 +6,17 @@ class History {
     private double money;
     private long time;
     private String info;
-    boolean isIncome;
+    private int type;
 
     History() {
     }
 
-    History(int id, double money, long time, String info, boolean isIncome) {
+    History(int id, double money, long time, String info, int type) {
         this.id = id;
         this.money = money;
         this.time = time;
         this.info = info;
-        this.isIncome = isIncome;
+        this.type = type;
     }
 
     int getId() {
@@ -51,12 +51,11 @@ class History {
         this.info = info;
     }
 
-    boolean isIncome() {
-        return isIncome;
+    public int getType() {
+        return type;
     }
 
-    void setIncome(boolean income) {
-        isIncome = income;
+    public void setType(int type) {
+        this.type = type;
     }
-
 }

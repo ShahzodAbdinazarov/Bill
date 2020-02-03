@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="time">Все время</string>
-    <string name="app_name">законопроект</string>
     <string name="delete">Вы хотите удалить это?</string>
     <string name="msgIn">Введите прибыль</string>
     <string name="msgOut">Введите потраченную сумму</string>
@@ -9,4 +8,5 @@
     <string name="first">первый раз</string>
     <string name="money">деньги</string>
     <string name="info">комментарий</string>
+    <string name="loading">загрузка…</string>
 </resources>

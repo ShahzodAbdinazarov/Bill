@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:targetApi="o">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingHorizontal="90dp"
+        android:paddingVertical="10dp"
+        android:singleLine="true"
+        android:text="@string/title_bill_type"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtOutgoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#fdd"
+        android:drawableStart="@drawable/down"
+        android:drawableLeft="@drawable/down"
+        android:padding="10dp"
+        android:text="@string/outgoing"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtIncome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#dfd"
+        android:drawableStart="@drawable/up"
+        android:drawableLeft="@drawable/up"
+        android:padding="10dp"
+        android:text="@string/income"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtBorrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#ffd"
+        android:drawableStart="@drawable/ic_borrow"
+        android:drawableLeft="@drawable/ic_borrow"
+        android:padding="10dp"
+        android:text="@string/borrow"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtBorrowBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#ffd"
+        android:drawableStart="@drawable/ic_borrow_back"
+        android:drawableLeft="@drawable/ic_borrow_back"
+        android:padding="10dp"
+        android:text="@string/borrow_back"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtLend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#ddf"
+        android:drawableStart="@drawable/ic_lend"
+        android:drawableLeft="@drawable/ic_lend"
+        android:padding="10dp"
+        android:text="@string/lend"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtLendBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#ddf"
+        android:drawableStart="@drawable/ic_lend_back"
+        android:drawableLeft="@drawable/ic_lend_back"
+        android:padding="10dp"
+        android:text="@string/lend_back"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+</LinearLayout>

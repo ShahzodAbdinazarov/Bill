@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,12 @@ import java.util.Objects;
 public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
+    private Context context;
 
     DBHelper(Context context) {
         super(context, "Bill", null, 1);
 
+        this.context = context;
         db = this.getWritableDatabase();
     }
 
@@ -43,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("money", String.valueOf(history.getMoney()));
         values.put("time", String.valueOf(history.getTime()));
         values.put("info", history.getInfo());
-        values.put("isIncome", history.isIncome() ? 1 : 0);
+        values.put("isIncome", history.getType());
 
         db.insert("History", null, values);
     }
@@ -60,15 +61,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 history.setMoney(Double.parseDouble(cursor.getString(1)));
                 history.setTime(Long.parseLong(cursor.getString(2)));
                 history.setInfo(cursor.getString(3));
-                history.setIncome(cursor.getInt(4) == 1);
-
-                Log.e("\t\t\tFromTime\t\t\t", String.valueOf(fromTime));
-                Log.e("\t\t\tBaseTime\t\t\t", cursor.getString(2));
-                Log.e("\t\t\tToTime  \t\t\t", String.valueOf(toTime));
+                history.setType(cursor.getInt(4));
 
                 if (fromTime < Long.parseLong(cursor.getString(2)) &&
-                        toTime > Long.parseLong(cursor.getString(2)))
-                    data.add(history);
+                        toTime > Long.parseLong(cursor.getString(2))) {
+                    if (!new Controller(context).getFilter() || cursor.getInt(4) > 1)
+                        data.add(history);
+                }
             } while (cursor.moveToNext());
         }
         Objects.requireNonNull(cursor).close();
@@ -84,10 +83,13 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM History", null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if (is == (cursor.getInt(4) == 1) &&
-                        fromTime < Long.parseLong(cursor.getString(2)) &&
-                        toTime > Long.parseLong(cursor.getString(2)))
-                    income += Double.parseDouble(cursor.getString(1));
+                int type = cursor.getInt(4);
+                if (!new Controller(context).getFilter() || type > 1) {
+                    if (is == (type == 1 || type == 2 || type == 4) &&
+                            fromTime < Long.parseLong(cursor.getString(2)) &&
+                            toTime > Long.parseLong(cursor.getString(2)))
+                        income += Double.parseDouble(cursor.getString(1));
+                }
             } while (cursor.moveToNext());
         }
         Objects.requireNonNull(cursor).close();
