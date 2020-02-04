@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements
         TextView txtLend = dialog.findViewById(R.id.txtLend);
         TextView txtLendBack = dialog.findViewById(R.id.txtLendBack);
 
-        txtOutgoing.setOnClickListener(l -> showInputDialog(0));
-        txtIncome.setOnClickListener(l -> showInputDialog(1));
-        txtBorrow.setOnClickListener(l -> showInputDialog(2));
-        txtBorrowBack.setOnClickListener(l -> showInputDialog(3));
-        txtLend.setOnClickListener(l -> showInputDialog(4));
-        txtLendBack.setOnClickListener(l -> showInputDialog(5));
+        txtOutgoing.setOnClickListener(l -> showInputDialog(0, dialog));
+        txtIncome.setOnClickListener(l -> showInputDialog(1, dialog));
+        txtBorrow.setOnClickListener(l -> showInputDialog(2, dialog));
+        txtBorrowBack.setOnClickListener(l -> showInputDialog(3, dialog));
+        txtLend.setOnClickListener(l -> showInputDialog(4, dialog));
+        txtLendBack.setOnClickListener(l -> showInputDialog(5, dialog));
 
         dialog.show();
     }
@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements
         this.setText = setText;
     }
 
-    public void showInputDialog(int type) {
+    public void showInputDialog(int type, Dialog d) {
+        d.cancel();
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);

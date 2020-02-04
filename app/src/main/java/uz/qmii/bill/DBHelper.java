@@ -85,7 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 int type = cursor.getInt(4);
                 if (!new Controller(context).getFilter() || type > 1) {
-                    if (is == (type == 1 || type == 2 || type == 4) &&
+                    if (is == (type == 1 || type == 2 || type == 5) &&
                             fromTime < Long.parseLong(cursor.getString(2)) &&
                             toTime > Long.parseLong(cursor.getString(2)))
                         income += Double.parseDouble(cursor.getString(1));
