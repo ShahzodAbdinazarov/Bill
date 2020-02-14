@@ -4,35 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
+    android:orientation="vertical"
     android:paddingHorizontal="10dp"
-    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded"
     tools:targetApi="o">
 
-    <ImageView
-        android:id="@+id/rowImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/down"
-        tools:ignore="ContentDescription" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/rowImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/down"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/txtMoney"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingVertical="10dp"
+            android:singleLine="true"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingVertical="10dp"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <TextView
-        android:gravity="right"
-        android:id="@+id/txtMoney"
-        android:layout_width="0dp"
+        android:id="@+id/txtComment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textSize="16sp"
-        tools:ignore="RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/txtTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textSize="16sp" />
+        android:padding="10dp" />
 
 </LinearLayout>

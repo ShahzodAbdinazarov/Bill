@@ -1,4 +1,4 @@
-package uz.qmii.bill;
+package org.hamroh.hisob;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,11 +20,4 @@ class Controller {
         shp.edit().putLong("fromTime", fromTime).apply();
     }
 
-    boolean getFilter() {
-        return shp.getBoolean("filter", false);
-    }
-
-    void setFilter(boolean b) {
-        shp.edit().putBoolean("filter", b).apply();
-    }
 }

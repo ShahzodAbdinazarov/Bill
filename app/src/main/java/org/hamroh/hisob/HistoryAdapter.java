@@ -1,4 +1,4 @@
-package uz.qmii.bill;
+package org.hamroh.hisob;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+
+import org.hamroh.hisob.Classes.History;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -56,6 +58,7 @@ public class HistoryAdapter extends BaseAdapter {
         ImageView rowImage = root.findViewById(R.id.rowImage);
         TextView txtMoney = root.findViewById(R.id.txtMoney);
         TextView txtTime = root.findViewById(R.id.txtTime);
+        TextView txtComment = root.findViewById(R.id.txtComment);
         switch (data.get(position).getType()) {
             case 0:
                 rowImage.setImageResource(R.drawable.down);
@@ -86,7 +89,18 @@ public class HistoryAdapter extends BaseAdapter {
         txtTime.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
                 .format(new Date(data.get(position).getTime())));
 
-        root.setOnClickListener(l -> Toast.makeText(activity, data.get(position).getInfo(), Toast.LENGTH_SHORT).show());
+        txtComment.setText(data.get(position).getInfo());
+        txtComment.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+        final boolean[] is = {true};
+        root.setOnClickListener(l -> {
+            if (is[0]) {
+                txtComment.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            } else {
+                txtComment.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+            }
+            is[0] = !is[0];
+        });
+
 
         root.setOnLongClickListener(l -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(activity);

@@ -1,4 +1,4 @@
-package uz.qmii.bill;
+package org.hamroh.hisob;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -7,19 +7,22 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.hamroh.hisob.Classes.Filter;
+import org.hamroh.hisob.Classes.History;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressLint("Recycle")
 public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
-    private Context context;
 
     DBHelper(Context context) {
         super(context, "Bill", null, 1);
 
-        this.context = context;
         db = this.getWritableDatabase();
     }
 
@@ -49,8 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert("History", null, values);
     }
 
-    @SuppressLint("Recycle")
-    List<History> getAll(long fromTime, long toTime) {
+    List<History> getAll(long fromTime, long toTime, boolean[] is) {
         List<History> data = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null);
         if (cursor != null && cursor.moveToFirst()) {
@@ -65,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 if (fromTime < Long.parseLong(cursor.getString(2)) &&
                         toTime > Long.parseLong(cursor.getString(2))) {
-                    if (!new Controller(context).getFilter() || cursor.getInt(4) > 1)
+                    if (is[(cursor.getInt(4) + 1)])
                         data.add(history);
                 }
             } while (cursor.moveToNext());
@@ -78,22 +80,66 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("History", "id = ?", new String[]{String.valueOf(id)});
     }
 
-    double getIncome(long fromTime, long toTime, boolean is) {
-        double income = 0;
+    Filter getIncome(long fromTime, long toTime) {
+        double up = 0;
+        double down = 0;
+        double borrow = 0;
+        double borrowBack = 0;
+        double lend = 0;
+        double lendBack = 0;
         Cursor cursor = db.rawQuery("SELECT * FROM History", null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 int type = cursor.getInt(4);
-                if (!new Controller(context).getFilter() || type > 1) {
-                    if (is == (type == 1 || type == 2 || type == 5) &&
-                            fromTime < Long.parseLong(cursor.getString(2)) &&
-                            toTime > Long.parseLong(cursor.getString(2)))
-                        income += Double.parseDouble(cursor.getString(1));
+
+                if (fromTime < Long.parseLong(cursor.getString(2)) &&
+                        toTime > Long.parseLong(cursor.getString(2))) {
+                    switch (type) {
+                        case 0:
+                            down += Double.parseDouble(cursor.getString(1));
+                            break;
+                        case 1:
+                            up += Double.parseDouble(cursor.getString(1));
+                            break;
+                        case 2:
+                            borrow += Double.parseDouble(cursor.getString(1));
+                            break;
+                        case 3:
+                            borrowBack += Double.parseDouble(cursor.getString(1));
+                            break;
+                        case 4:
+                            lend += Double.parseDouble(cursor.getString(1));
+                            break;
+                        case 5:
+                            lendBack += Double.parseDouble(cursor.getString(1));
+                            break;
+                    }
                 }
             } while (cursor.moveToNext());
         }
         Objects.requireNonNull(cursor).close();
-        return income;
+        return new Filter(up, down, borrow, borrowBack, lend, lendBack);
+    }
+
+    double getDailyAmount() {
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long time = currentTime;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM History ORDER BY time ASC", null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int type = cursor.getInt(4);
+
+                if (type == 0) {
+                    time = Long.parseLong(cursor.getString(2));
+                    break;
+                }
+
+            } while (cursor.moveToNext());
+
+        }
+        Filter filter = getIncome(0, currentTime);
+        return filter.getDown() / ((currentTime - time) / 86400000 + 1);
     }
 
 }

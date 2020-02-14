@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:targetApi="o">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,14 +57,13 @@
                 android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/filter"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnQuestion"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="#fd9"
                 android:contentDescription="@string/todo"
                 android:padding="5dp"
-                android:src="@drawable/ic_bill_all" />
+                android:src="@drawable/savol" />
 
         </LinearLayout>
 
@@ -72,19 +72,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
             android:background="#aff"
             android:gravity="center"
-            android:paddingVertical="20dp"
+            android:paddingTop="20dp"
             android:singleLine="true"
             android:textColor="#000"
-            android:textSize="36sp"
-            tools:targetApi="o" />
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:background="#aff"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:singleLine="true"
+            android:textColor="#000" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -101,15 +110,14 @@
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <ImageView
+                android:id="@+id/expend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="|"
-                android:textColor="#000"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                android:padding="8dp"
+                android:src="@drawable/ic_expand_more" />
 
             <TextView
                 android:id="@+id/outcome"
@@ -124,6 +132,77 @@
                 android:textColor="#000"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/expendLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp">
+
+            <ImageView
+                android:id="@+id/zeroFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/ic_select_all" />
+
+            <ImageView
+                android:id="@+id/oneFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/up" />
+
+            <ImageView
+                android:id="@+id/twoFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/down" />
+
+            <ImageView
+                android:id="@+id/threeFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/ic_borrow" />
+
+            <ImageView
+                android:id="@+id/fourFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/ic_borrow_back" />
+
+            <ImageView
+                android:id="@+id/fiveFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/ic_lend" />
+
+            <ImageView
+                android:id="@+id/sixFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/todo"
+                android:padding="4dp"
+                android:src="@drawable/ic_lend_back" />
 
         </LinearLayout>
 

@@ -1,6 +1,6 @@
-package uz.qmii.bill;
+package org.hamroh.hisob.Classes;
 
-class History {
+public class History {
 
     private int id;
     private double money;
@@ -8,10 +8,10 @@ class History {
     private String info;
     private int type;
 
-    History() {
+    public History() {
     }
 
-    History(int id, double money, long time, String info, int type) {
+    public History(int id, double money, long time, String info, int type) {
         this.id = id;
         this.money = money;
         this.time = time;
@@ -19,35 +19,35 @@ class History {
         this.type = type;
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    double getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    void setMoney(double money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
-    long getTime() {
+    public long getTime() {
         return time;
     }
 
-    void setTime(long time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
-    String getInfo() {
+    public String getInfo() {
         return info;
     }
 
-    void setInfo(String info) {
+    public void setInfo(String info) {
         this.info = info;
     }
 
