@@ -7,8 +7,8 @@ android {
         applicationId "org.hamroh.hisob"
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
