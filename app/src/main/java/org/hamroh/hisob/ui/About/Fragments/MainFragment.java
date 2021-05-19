@@ -1,14 +1,15 @@
 package org.hamroh.hisob.ui.About.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -27,7 +28,7 @@ import java.util.Objects;
 @SuppressLint("InflateParams")
 public class MainFragment extends Fragment {
 
-    private List<String> data = new ArrayList<>();
+    private final List<String> data = new ArrayList<>();
     private ListView listSavol;
     private TextInputEditText edtSearch;
     private List<String> searchData;
@@ -39,15 +40,17 @@ public class MainFragment extends Fragment {
 
         ImageView close = root.findViewById(R.id.close);
         ImageView search = root.findViewById(R.id.search);
-        Button sponsors = root.findViewById(R.id.sponsors);
         listSavol = root.findViewById(R.id.listSavol);
         edtSearch = root.findViewById(R.id.edtSearch);
 
-        close.setOnClickListener(l -> Objects.requireNonNull(getActivity()).finish());
-        search.setOnClickListener(l -> searchSavol());
-        sponsors.setOnClickListener(l -> {
-            if (getActivity() != null) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.aboutContainer, new HomiyFragment()).commit();
+        close.setOnClickListener(l -> requireActivity().finish());
+        search.setOnClickListener(l -> {
+            edtSearch.requestFocus();
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (Objects.requireNonNull(edtSearch.getText()).length() > 0) {
+                imm.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0);
+            } else {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
 

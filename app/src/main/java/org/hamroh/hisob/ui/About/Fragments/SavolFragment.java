@@ -21,7 +21,7 @@ import java.util.List;
 @SuppressLint("InflateParams")
 public class SavolFragment extends Fragment {
 
-    private List<Savol> data = new ArrayList<>();
+    private final List<Savol> data = new ArrayList<>();
 
     @Nullable
     @Override
