@@ -18,7 +18,7 @@ import java.util.Objects;
 @SuppressLint("Recycle")
 public class DBHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db;
+    private final SQLiteDatabase db;
 
     DBHelper(Context context) {
         super(context, "Bill", null, 1);
@@ -95,24 +95,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 if (fromTime < Long.parseLong(cursor.getString(2)) &&
                         toTime > Long.parseLong(cursor.getString(2))) {
                     switch (type) {
-                        case 0:
-                            down += Double.parseDouble(cursor.getString(1));
-                            break;
-                        case 1:
-                            up += Double.parseDouble(cursor.getString(1));
-                            break;
-                        case 2:
-                            borrow += Double.parseDouble(cursor.getString(1));
-                            break;
-                        case 3:
-                            borrowBack += Double.parseDouble(cursor.getString(1));
-                            break;
-                        case 4:
-                            lend += Double.parseDouble(cursor.getString(1));
-                            break;
-                        case 5:
-                            lendBack += Double.parseDouble(cursor.getString(1));
-                            break;
+                        case 0 -> down += Double.parseDouble(cursor.getString(1));
+                        case 1 -> up += Double.parseDouble(cursor.getString(1));
+                        case 2 -> borrow += Double.parseDouble(cursor.getString(1));
+                        case 3 -> borrowBack += Double.parseDouble(cursor.getString(1));
+                        case 4 -> lend += Double.parseDouble(cursor.getString(1));
+                        case 5 -> lendBack += Double.parseDouble(cursor.getString(1));
                     }
                 }
             } while (cursor.moveToNext());

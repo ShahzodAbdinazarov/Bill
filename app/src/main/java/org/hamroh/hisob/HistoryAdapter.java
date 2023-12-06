@@ -23,10 +23,10 @@ import java.util.Locale;
 
 public class HistoryAdapter extends BaseAdapter {
 
-    private Activity activity;
-    private List<History> data;
-    private LayoutInflater inflater;
-    private DBHelper db;
+    private final Activity activity;
+    private final List<History> data;
+    private final LayoutInflater inflater;
+    private final DBHelper db;
 
     HistoryAdapter(Activity activity, List<History> data) {
         this.activity = activity;
@@ -60,26 +60,14 @@ public class HistoryAdapter extends BaseAdapter {
         TextView txtTime = root.findViewById(R.id.txtTime);
         TextView txtComment = root.findViewById(R.id.txtComment);
         switch (data.get(position).getType()) {
-            case 0:
-                rowImage.setImageResource(R.drawable.down);
-                break;
-            case 1:
-                rowImage.setImageResource(R.drawable.up);
-                break;
-            case 2:
-                rowImage.setImageResource(R.drawable.ic_borrow);
-                break;
-            case 3:
-                rowImage.setImageResource(R.drawable.ic_borrow_back);
-                break;
-            case 4:
-                rowImage.setImageResource(R.drawable.ic_lend);
-                break;
-            case 5:
-                rowImage.setImageResource(R.drawable.ic_lend_back);
-                break;
-            default:
-                break;
+            case 0 -> rowImage.setImageResource(R.drawable.down);
+            case 1 -> rowImage.setImageResource(R.drawable.up);
+            case 2 -> rowImage.setImageResource(R.drawable.ic_borrow);
+            case 3 -> rowImage.setImageResource(R.drawable.ic_borrow_back);
+            case 4 -> rowImage.setImageResource(R.drawable.ic_lend);
+            case 5 -> rowImage.setImageResource(R.drawable.ic_lend_back);
+            default -> {
+            }
         }
         Double number = data.get(position).getMoney();
         NumberFormat decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
@@ -106,26 +94,14 @@ public class HistoryAdapter extends BaseAdapter {
             AlertDialog.Builder alert = new AlertDialog.Builder(activity);
             alert.setTitle(money);
             switch (data.get(position).getType()) {
-                case 0:
-                    alert.setIcon(R.drawable.down);
-                    break;
-                case 1:
-                    alert.setIcon(R.drawable.up);
-                    break;
-                case 2:
-                    alert.setIcon(R.drawable.ic_borrow);
-                    break;
-                case 3:
-                    alert.setIcon(R.drawable.ic_borrow_back);
-                    break;
-                case 4:
-                    alert.setIcon(R.drawable.ic_lend);
-                    break;
-                case 5:
-                    alert.setIcon(R.drawable.ic_lend_back);
-                    break;
-                default:
-                    break;
+                case 0 -> alert.setIcon(R.drawable.down);
+                case 1 -> alert.setIcon(R.drawable.up);
+                case 2 -> alert.setIcon(R.drawable.ic_borrow);
+                case 3 -> alert.setIcon(R.drawable.ic_borrow_back);
+                case 4 -> alert.setIcon(R.drawable.ic_lend);
+                case 5 -> alert.setIcon(R.drawable.ic_lend_back);
+                default -> {
+                }
             }
             alert.setMessage(R.string.delete);
             alert.setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {

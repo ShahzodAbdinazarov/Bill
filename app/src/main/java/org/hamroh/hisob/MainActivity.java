@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView amount, current, income, outcome, from, to, setText;
     private int year, month, day;
     private DBHelper db;
-    private Controller cr;
+    private SharedPrefs cr;
     private long toTime, fromTime, selectTime = Calendar.getInstance().getTimeInMillis();
 
     @Override
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
         db = new DBHelper(this);
-        cr = new Controller(this);
+        cr = new SharedPrefs(this);
         toTime = Calendar.getInstance().getTimeInMillis();
         fromTime = cr.getFromTime();
         String time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(fromTime));
@@ -233,32 +233,32 @@ public class MainActivity extends AppCompatActivity implements
         ImageView icon = dialog.findViewById(R.id.dialogImage);
         TextView title = dialog.findViewById(R.id.dialogTitle);
         switch (type) {
-            case 0:
+            case 0 -> {
                 icon.setImageResource(R.drawable.down);
                 title.setText(R.string.outgoing);
-                break;
-            case 1:
+            }
+            case 1 -> {
                 icon.setImageResource(R.drawable.up);
                 title.setText(R.string.income);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 icon.setImageResource(R.drawable.ic_borrow);
                 title.setText(R.string.borrow);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 icon.setImageResource(R.drawable.ic_borrow_back);
                 title.setText(R.string.borrow_back);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 icon.setImageResource(R.drawable.ic_lend);
                 title.setText(R.string.lend);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 icon.setImageResource(R.drawable.ic_lend_back);
                 title.setText(R.string.lend_back);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         EditText dialogMoney = dialog.findViewById(R.id.dialogMoney);
 
