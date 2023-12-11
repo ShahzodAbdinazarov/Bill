@@ -16,8 +16,8 @@ android {
         applicationId "org.hamroh.hisob"
         minSdk 24
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +26,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix = ".debug"
         }
     }
     compileOptions {
@@ -47,7 +50,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.3.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.4.0'
     implementation 'androidx.work:work-runtime:2.9.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.6.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
@@ -89,6 +92,6 @@ dependencies {
     implementation 'androidx.biometric:biometric-ktx:1.2.0-alpha05'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-messaging:23.3.1'
+    implementation 'com.google.firebase:firebase-messaging:23.4.0'
 
 }
