@@ -52,6 +52,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
+
 /*
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:23.4.0'
@@ -83,10 +88,6 @@ dependencies {
     //Chucker
     debugImplementation 'com.github.chuckerteam.chucker:library:4.0.0'
     releaseImplementation 'com.github.chuckerteam.chucker:library-no-op:4.0.0'
-
-    // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
 
     // Lottie
     implementation 'com.airbnb.android:lottie:6.2.0'
