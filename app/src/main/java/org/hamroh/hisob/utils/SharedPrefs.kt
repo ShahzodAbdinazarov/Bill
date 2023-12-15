@@ -1,4 +1,4 @@
-package org.hamroh.hisob
+package org.hamroh.hisob.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -26,7 +26,7 @@ class SharedPrefs(context: Context) {
         else -> null
     } as T
 
-    fun <T> put(key: String, data: T) {
+    private fun <T> put(key: String, data: T) {
         val editor = sharedPref.edit()
         when (data) {
             is String -> editor.putString(key, data)
@@ -39,6 +39,6 @@ class SharedPrefs(context: Context) {
         editor.apply()
     }
 
-    fun clearAll() = sharedPref.edit().clear().commit()
+//    fun clearAll() = sharedPref.edit().clear().commit()
 
 }

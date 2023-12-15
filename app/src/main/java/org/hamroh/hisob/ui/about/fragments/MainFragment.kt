@@ -1,120 +1,105 @@
-package org.hamroh.hisob.ui.About.Fragments;
+package org.hamroh.hisob.ui.about.fragments
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.textfield.TextInputEditText;
-
-import org.hamroh.hisob.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.ListView
+import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputEditText
+import org.hamroh.hisob.R
+import org.hamroh.hisob.databinding.FragmentAboutMainBinding
+import java.util.Locale
 
 @SuppressLint("InflateParams")
-public class MainFragment extends Fragment {
+class MainFragment : Fragment() {
+    private val data: MutableList<String> = ArrayList()
+    private var listSavol: ListView? = null
+    private var edtSearch: TextInputEditText? = null
+    private var searchData: MutableList<String>? = null
+    private var _binding: FragmentAboutMainBinding? = null
+    private val binding get() = _binding!!
 
-    private final List<String> data = new ArrayList<>();
-    private ListView listSavol;
-    private TextInputEditText edtSearch;
-    private List<String> searchData;
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentAboutMainBinding.inflate(inflater, container, false)
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_about_main, null);
-
-        ImageView close = root.findViewById(R.id.close);
-        ImageView search = root.findViewById(R.id.search);
-        listSavol = root.findViewById(R.id.listSavol);
-        edtSearch = root.findViewById(R.id.edtSearch);
-
-        close.setOnClickListener(l -> requireActivity().finish());
-        search.setOnClickListener(l -> {
-            edtSearch.requestFocus();
-            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (Objects.requireNonNull(edtSearch.getText()).length() > 0) {
-                imm.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0);
+        val root = inflater.inflate(R.layout.fragment_about_main, null)
+        val close = root.findViewById<ImageView>(R.id.close)
+        val search = root.findViewById<ImageView>(R.id.search)
+        listSavol = root.findViewById(R.id.listSavol)
+        edtSearch = root.findViewById(R.id.edtSearch)
+        close.setOnClickListener { requireActivity().finish() }
+        search.setOnClickListener {
+            binding.edtSearch.requestFocus()
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (binding.edtSearch.text?.isNotEmpty() == true) {
+                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
             } else {
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
-        });
-
-        refresh();
-
-        searchSavol();
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchSavol();
+        }
+        refresh()
+        searchSavol()
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                searchSavol()
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+            override fun afterTextChanged(s: Editable) {}
+        })
+        binding.listSavol.onItemClickListener = OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            val fragment: Fragment = SavolFragment()
+            val bundle = Bundle()
+            bundle.putString("savol", searchData!![position])
+            fragment.arguments = bundle
+            if (activity != null) {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.aboutContainer, fragment).commit()
             }
-        });
-
-        listSavol.setOnItemClickListener((parent, view, position, id) -> {
-            Fragment fragment = new SavolFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("savol", searchData.get(position));
-            fragment.setArguments(bundle);
-            if (getActivity() != null) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.aboutContainer, fragment).commit();
-            }
-        });
-
-        return root;
+        }
+        return root
     }
 
-    private void refresh() {
-        data.add("Bu o'zi qanday dastur?");
-        data.add("Dasturdan qanday foydalaniladi?");
-        data.add("Kirim qanday kiritiladi?");
-        data.add("Kiritilgan hisob qanday o'chiriladi?");
-        data.add("Hisob qanday o'zgartiriladi?");
-        data.add("Izoh qayerdan ko'riladi?");
-        data.add("Vaqt bo'yicha qanday filterlanadi?");
-        data.add("Hisob turi bo'yicha qanday filterlanadi?");
-        data.add("Men qanday homiylik qilishim mumkin?");
-
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data);
-            listSavol.setAdapter(adapter);
+    private fun refresh() {
+        data.add("Bu o'zi qanday dastur?")
+        data.add("Dasturdan qanday foydalaniladi?")
+        data.add("Kirim qanday kiritiladi?")
+        data.add("Kiritilgan hisob qanday o'chiriladi?")
+        data.add("Hisob qanday o'zgartiriladi?")
+        data.add("Izoh qayerdan ko'riladi?")
+        data.add("Vaqt bo'yicha qanday filterlanadi?")
+        data.add("Hisob turi bo'yicha qanday filterlanadi?")
+        data.add("Men qanday homiylik qilishim mumkin?")
+        if (activity != null) {
+            val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, data)
+            listSavol!!.adapter = adapter
         }
     }
 
-    private void searchSavol() {
-        searchData = new ArrayList<>();
-        String text = (edtSearch.getText() != null) ? edtSearch.getText().toString().toLowerCase() : "";
-        for (int i = 0; i < data.size(); i++) {
-            String search = data.get(i).toLowerCase();
+    private fun searchSavol() {
+        searchData = ArrayList()
+        val text = if (edtSearch!!.text != null) edtSearch!!.text.toString().lowercase(Locale.getDefault()) else ""
+        for (i in data.indices) {
+            val search = data[i].lowercase(Locale.getDefault())
             if (search.contains(text)) {
-                searchData.add(data.get(i));
+                (searchData as ArrayList<String>).add(data[i])
             }
         }
-
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, searchData);
-            listSavol.setAdapter(adapter);
+        if (activity != null) {
+            val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, searchData as ArrayList<String>)
+            listSavol!!.adapter = adapter
         }
     }
 }

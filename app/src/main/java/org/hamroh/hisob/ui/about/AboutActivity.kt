@@ -1,20 +1,14 @@
-package org.hamroh.hisob.ui.About;
+package org.hamroh.hisob.ui.about
 
-import android.os.Bundle;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.hamroh.hisob.R
+import org.hamroh.hisob.ui.about.fragments.MainFragment
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.hamroh.hisob.R;
-import org.hamroh.hisob.ui.About.Fragments.MainFragment;
-
-public class AboutActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.aboutContainer, new MainFragment()).commit();
-
+class AboutActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_about)
+        supportFragmentManager.beginTransaction().add(R.id.aboutContainer, MainFragment()).commit()
     }
 }
