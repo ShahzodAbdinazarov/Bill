@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/down"
+            android:src="@drawable/income"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -38,9 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:autofillHints="@string/money"
+        android:autofillHints="@string/amount"
         android:background="#eee"
-        android:hint="@string/money"
+        android:hint="@string/amount"
         android:inputType="number"
         android:padding="10dp"
         android:textColor="#000"
@@ -66,15 +66,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:autofillHints="@string/info"
+        android:autofillHints="@string/desc"
         android:background="#eee"
-        android:hint="@string/info"
+        android:hint="@string/desc"
         android:inputType="textCapSentences"
         android:padding="10dp"
         android:textColor="#000"
         android:textSize="16sp"
-        tools:ignore="LabelFor"
-        tools:targetApi="o" />
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/dialogOK"

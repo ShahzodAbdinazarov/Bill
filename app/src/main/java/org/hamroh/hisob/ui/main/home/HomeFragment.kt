@@ -1,30 +1,25 @@
 package org.hamroh.hisob.ui.main.home
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
-import org.hamroh.hisob.data.History
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.ui.about.AboutActivity
 import org.hamroh.hisob.ui.main.HistoryAdapter
+import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.utils.SharedPrefs
+import org.hamroh.hisob.utils.getTime
+import org.hamroh.hisob.utils.timeFormat
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.util.Calendar
@@ -47,15 +42,16 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        db = DBHelper(requireContext())
-        cr = SharedPrefs(requireContext())
-        toTime = Calendar.getInstance().timeInMillis
-        fromTime = cr!!.getFromTime()
+        refresh()
 
         val time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(fromTime))
         binding.from.text = time
-        refresh()
-        binding.fab.setOnClickListener { dialog() }
+        binding.fab.setOnClickListener {
+            val addTransaction = AddTransactionDialog()
+            addTransaction.money = money
+            addTransaction.onClick = { refresh() }
+            addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
+        }
         binding.from.setOnClickListener {
             setTime()
             setSetText(binding.from)
@@ -66,16 +62,16 @@ class HomeFragment : Fragment() {
         }
         binding.btnQuestion.setOnClickListener { startActivity(Intent(requireContext(), AboutActivity::class.java)) }
         binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
-        val more = booleanArrayOf(true)
+        var more = true
         binding.expend.setOnClickListener {
-            if (more[0]) {
+            if (more) {
                 binding.expend.setImageResource(R.drawable.ic_expand_less)
                 binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             } else {
                 binding.expend.setImageResource(R.drawable.ic_expand_more)
                 binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
             }
-            more[0] = !more[0]
+            more = !more
         }
         clickExpends()
 
@@ -179,100 +175,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun dialog() {
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_type)
-        val txtOutgoing = dialog.findViewById<TextView>(R.id.txtOutgoing)
-        val txtIncome = dialog.findViewById<TextView>(R.id.txtIncome)
-        val txtBorrow = dialog.findViewById<TextView>(R.id.txtBorrow)
-        val txtBorrowBack = dialog.findViewById<TextView>(R.id.txtBorrowBack)
-        val txtLend = dialog.findViewById<TextView>(R.id.txtLend)
-        val txtLendBack = dialog.findViewById<TextView>(R.id.txtLendBack)
-        txtOutgoing.setOnClickListener { showInputDialog(0, dialog) }
-        txtIncome.setOnClickListener { showInputDialog(1, dialog) }
-        txtBorrow.setOnClickListener { showInputDialog(2, dialog) }
-        txtBorrowBack.setOnClickListener { showInputDialog(3, dialog) }
-        txtLend.setOnClickListener { showInputDialog(4, dialog) }
-        txtLendBack.setOnClickListener { showInputDialog(5, dialog) }
-        dialog.show()
-    }
-
-    private fun showInputDialog(type: Int, d: Dialog) {
-        d.cancel()
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog)
-        val icon = dialog.findViewById<ImageView>(R.id.dialogImage)
-        val title = dialog.findViewById<TextView>(R.id.dialogTitle)
-        when (type) {
-            0 -> {
-                icon.setImageResource(R.drawable.down)
-                title.setText(R.string.outgoing)
-            }
-
-            1 -> {
-                icon.setImageResource(R.drawable.up)
-                title.setText(R.string.income)
-            }
-
-            2 -> {
-                icon.setImageResource(R.drawable.ic_borrow)
-                title.setText(R.string.borrow)
-            }
-
-            3 -> {
-                icon.setImageResource(R.drawable.ic_borrow_back)
-                title.setText(R.string.borrow_back)
-            }
-
-            4 -> {
-                icon.setImageResource(R.drawable.ic_lend)
-                title.setText(R.string.lend)
-            }
-
-            5 -> {
-                icon.setImageResource(R.drawable.ic_lend_back)
-                title.setText(R.string.lend_back)
-            }
-
-            else -> {}
-        }
-        val dialogMoney = dialog.findViewById<EditText>(R.id.dialogMoney)
-        val dialogTime = dialog.findViewById<TextView>(R.id.dialogTime)
-        dialogTime.text = DateFormat.getDateTimeInstance(
-            DateFormat.MEDIUM,
-            DateFormat.SHORT
-        ).format(Date(Calendar.getInstance().timeInMillis))
-        selectTime = Calendar.getInstance().timeInMillis
-        dialogTime.setOnClickListener {
-            setTime()
-            setSetText(dialogTime)
-        }
-        val dialogInfo = dialog.findViewById<EditText>(R.id.dialogInfo)
-        val dialogButton = dialog.findViewById<Button>(R.id.dialogOK)
-        dialogButton.setOnClickListener {
-            if (dialogMoney.text.toString().isNotEmpty()) {
-                val edtMoney = dialogMoney.text.toString().toDouble()
-                if (edtMoney < money || type == 1 || type == 2 || type == 5) {
-                    val info = dialogInfo.text.toString()
-                    val history = History(1, money = edtMoney, selectTime, info = info, type)
-                    db!!.add(history)
-                    dialog.dismiss()
-                    refresh()
-                } else {
-                    dialogMoney.error = "Yetarli mablag' mavjud emas!"
-                    dialogMoney.requestFocus()
-                }
-            } else {
-                dialogMoney.error = "Mablag'ni kiriting!"
-                dialogMoney.requestFocus()
-            }
-        }
-        dialog.show()
-    }
-
     @SuppressLint("SetTextI18n")
     private fun refresh() {
+        db = DBHelper(requireContext())
+        cr = SharedPrefs(requireContext())
+        toTime = Calendar.getInstance().timeInMillis
+        fromTime = cr!!.getFromTime()
         val filter: Filter = db!!.getIncome(fromTime, toTime)
         var `in` = 0.0
         var out = 0.0
@@ -320,42 +228,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setTime() {
-        val calendar = Calendar.getInstance()
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                calendar.set(Calendar.MINUTE, minute)
-
-                selectTime = calendar.timeInMillis
-                val time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(selectTime))
-                setText!!.text = time
-                if (setText === binding.from) {
-                    fromTime = selectTime
-                    cr!!.setFromTime(fromTime)
-                } else if (setText === binding.to) {
-                    toTime = selectTime
-                }
-                refresh()
+        requireContext().getTime {
+            selectTime = it
+            setText!!.text = selectTime.timeFormat()
+            if (setText === binding.from) {
+                fromTime = selectTime
+                cr!!.setFromTime(fromTime)
+            } else if (setText === binding.to) {
+                toTime = selectTime
             }
-
-            TimePickerDialog(
-                requireContext(), timeSetListener,
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true
-            ).show()
-
+            refresh()
         }
-        DatePickerDialog(
-            requireContext(), dateSetListener,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
     }
 
 

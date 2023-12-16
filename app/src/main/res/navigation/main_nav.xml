@@ -11,4 +11,10 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
+    <dialog
+        android:id="@+id/addTransactionDialog"
+        android:name="org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog"
+        android:label="fragment_add_transaction"
+        tools:layout="@layout/fragment_add_transaction" />
+
 </navigation>

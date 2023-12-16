@@ -2,9 +2,9 @@ package org.hamroh.hisob.data
 
 data class History(
     var id: Int = 0,
-    var money: Double = 0.0,
+    var amount: Double = 0.0,
     var time: Long = 0,
-    var info: String = "",
+    var desc: String = "",
     var type: Int = 0,
 )
 

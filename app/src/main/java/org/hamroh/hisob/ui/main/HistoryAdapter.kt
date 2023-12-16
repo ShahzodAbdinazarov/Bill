@@ -44,21 +44,21 @@ class HistoryAdapter internal constructor(private val activity: Activity, privat
         val txtTime = root.findViewById<TextView>(R.id.txtTime)
         val txtComment = root.findViewById<TextView>(R.id.txtComment)
         when (data[position].type) {
-            0 -> rowImage.setImageResource(R.drawable.down)
-            1 -> rowImage.setImageResource(R.drawable.up)
-            2 -> rowImage.setImageResource(R.drawable.ic_borrow)
-            3 -> rowImage.setImageResource(R.drawable.ic_borrow_back)
-            4 -> rowImage.setImageResource(R.drawable.ic_lend)
-            5 -> rowImage.setImageResource(R.drawable.ic_lend_back)
+            0 -> rowImage.setImageResource(R.drawable.income)
+            1 -> rowImage.setImageResource(R.drawable.expense)
+            2 -> rowImage.setImageResource(R.drawable.borrow)
+            3 -> rowImage.setImageResource(R.drawable.borrow_back)
+            4 -> rowImage.setImageResource(R.drawable.lend)
+            5 -> rowImage.setImageResource(R.drawable.lend_back)
             else -> {}
         }
-        val number = data[position].money
+        val number = data[position].amount
         val decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
         val money = decimalFormat.format(number)
         txtMoney.text = money
         txtTime.text = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
             .format(Date(data[position].time))
-        txtComment.text = data[position].info
+        txtComment.text = data[position].desc
         txtComment.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
         val `is` = booleanArrayOf(true)
         root.setOnClickListener {
@@ -73,12 +73,12 @@ class HistoryAdapter internal constructor(private val activity: Activity, privat
             val alert = AlertDialog.Builder(activity)
             alert.setTitle(money)
             when (data[position].type) {
-                0 -> alert.setIcon(R.drawable.down)
-                1 -> alert.setIcon(R.drawable.up)
-                2 -> alert.setIcon(R.drawable.ic_borrow)
-                3 -> alert.setIcon(R.drawable.ic_borrow_back)
-                4 -> alert.setIcon(R.drawable.ic_lend)
-                5 -> alert.setIcon(R.drawable.ic_lend_back)
+                0 -> alert.setIcon(R.drawable.income)
+                1 -> alert.setIcon(R.drawable.expense)
+                2 -> alert.setIcon(R.drawable.borrow)
+                3 -> alert.setIcon(R.drawable.borrow_back)
+                4 -> alert.setIcon(R.drawable.lend)
+                5 -> alert.setIcon(R.drawable.lend_back)
                 else -> {}
             }
             alert.setMessage(R.string.delete)

@@ -29,9 +29,9 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
 
     fun add(history: History) {
         val values = ContentValues()
-        values.put("money", history.money.toString())
+        values.put("money", history.amount.toString())
         values.put("time", history.time.toString())
-        values.put("info", history.info)
+        values.put("info", history.desc)
         values.put("isIncome", history.type)
         db.insert("History", null, values)
     }
@@ -43,9 +43,9 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
             do {
                 val history = History()
                 history.id = cursor.getInt(0)
-                history.money = (cursor.getString(1).toDouble())
+                history.amount = (cursor.getString(1).toDouble())
                 history.time = (cursor.getString(2).toLong())
-                history.info = (cursor.getString(3))
+                history.desc = (cursor.getString(3))
                 history.type = (cursor.getInt(4))
                 if (cursor.getString(2).toLong() in (fromTime + 1) until toTime) {
                     if (`is`[cursor.getInt(4) + 1]) data.add(history)

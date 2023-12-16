@@ -6,15 +6,19 @@
     <string name="msgOut">Sarflangan miqdorni kiriting</string>
     <string name="first">birinchi vaqt</string>
     <string name="now">Hozir</string>
-    <string name="money">Mablag\'</string>
-    <string name="info">Izoh</string>
+    <string name="amount">Mablag‘</string>
+    <string name="desc">Izoh</string>
     <string name="todo" translatable="false">TODO</string>
     <string name="loading">Yuklanmoqda…</string>
     <string name="title_bill_type">Hisob turi</string>
     <string name="income">Kirim</string>
-    <string name="outgoing">Chiqim</string>
+    <string name="expense">Chiqim</string>
     <string name="borrow">Qarz olish</string>
     <string name="borrow_back">Qarzni qaytarish</string>
     <string name="lend">Qarz berish</string>
     <string name="lend_back">Qarzni qaytarib olish</string>
+    <string name="save">Saqlash</string>
+    <string name="summa">1,000</string>
+    <string name="sum">so‘m</string>
+    <string name="type_error">Amaliyotni turini tanlang!</string>
 </resources>
