@@ -56,15 +56,6 @@
                 android:textColor="#000"
                 android:textSize="12sp" />
 
-            <ImageView
-                android:id="@+id/btnQuestion"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:contentDescription="@string/todo"
-                android:padding="5dp"
-                android:src="@drawable/savol" />
-
         </LinearLayout>
 
         <TextView
@@ -206,13 +197,10 @@
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/history"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_month"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="#fff" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

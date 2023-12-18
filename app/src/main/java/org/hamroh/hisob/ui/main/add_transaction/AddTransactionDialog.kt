@@ -9,10 +9,11 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DBHelper
-import org.hamroh.hisob.data.History
+import org.hamroh.hisob.data.Transaction
 import org.hamroh.hisob.databinding.FragmentAddTransactionBinding
 import org.hamroh.hisob.utils.getTime
 import org.hamroh.hisob.utils.timeFormat
+
 
 class AddTransactionDialog : BottomSheetDialogFragment() {
 
@@ -54,7 +55,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
     private fun saveTransaction() {
         val db = DBHelper(requireContext())
         if (validation()) {
-            db.add(History(1, binding.etAmount.text.toString().toDouble(), selectTime, desc = binding.etDesc.text.toString(), type))
+            db.add(Transaction(1, binding.etAmount.text.toString().toDouble(), selectTime, note = binding.etNote.text.toString(), type))
             onClick?.invoke(true)
             dismiss()
         }
@@ -98,4 +99,5 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.BottomSheetDialog)
     }
+
 }

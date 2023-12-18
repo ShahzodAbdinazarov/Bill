@@ -1,41 +1,37 @@
 package org.hamroh.hisob.ui.main.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
 import org.hamroh.hisob.databinding.FragmentHomeBinding
-import org.hamroh.hisob.ui.about.AboutActivity
-import org.hamroh.hisob.ui.main.HistoryAdapter
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.utils.SharedPrefs
 import org.hamroh.hisob.utils.getTime
+import org.hamroh.hisob.utils.moneyFormat
 import org.hamroh.hisob.utils.timeFormat
-import java.text.DateFormat
-import java.text.NumberFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import kotlin.math.floor
 
 class HomeFragment : Fragment() {
+
+    private val viewModel: HomeViewModel by viewModels()
+
     private val `is` = booleanArrayOf(true, true, true, true, true, true, true)
     private var money = 0.0
-    private var setText: TextView? = null
     private var db: DBHelper? = null
     private var cr: SharedPrefs? = null
     private var toTime: Long = 0
     private var fromTime: Long = 0
-    private var selectTime = Calendar.getInstance().timeInMillis
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -44,8 +40,9 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         refresh()
 
-        val time = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(fromTime))
-        binding.from.text = time
+        setupMonths()
+
+        binding.from.text = fromTime.timeFormat()
         binding.fab.setOnClickListener {
             val addTransaction = AddTransactionDialog()
             addTransaction.money = money
@@ -53,14 +50,20 @@ class HomeFragment : Fragment() {
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
         binding.from.setOnClickListener {
-            setTime()
-            setSetText(binding.from)
+            requireContext().getTime {
+                fromTime = it
+                cr!!.setFromTime(fromTime)
+                binding.from.text = fromTime.timeFormat()
+                refresh()
+            }
         }
         binding.to.setOnClickListener {
-            setTime()
-            setSetText(binding.to)
+            requireContext().getTime {
+                toTime = it
+                binding.to.text = toTime.timeFormat()
+                refresh()
+            }
         }
-        binding.btnQuestion.setOnClickListener { startActivity(Intent(requireContext(), AboutActivity::class.java)) }
         binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
         var more = true
         binding.expend.setOnClickListener {
@@ -195,54 +198,25 @@ class HomeFragment : Fragment() {
         binding.amount.text = "Tahminan $day kunga yetadi."
         `in` = 0.0
         out = 0.0
-        if (`is`[2]) {
-            `in` += filter.up
-        }
-        if (`is`[1]) {
-            out += filter.down
-        }
-        if (`is`[3]) {
-            `in` += filter.borrow
-        }
-        if (`is`[4]) {
-            out += filter.borrowBack
-        }
-        if (`is`[5]) {
-            out += filter.lend
-        }
-        if (`is`[6]) {
-            `in` += filter.lendBack
-        }
-        var decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-        var txtMoney = decimalFormat.format(`in`)
-        binding.income.text = txtMoney
-        decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-        txtMoney = decimalFormat.format(out)
-        binding.outcome.text = txtMoney
-        val number = `in` - out
-        decimalFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-        txtMoney = decimalFormat.format(number)
-        binding.current.text = txtMoney
-        val adapter = HistoryAdapter(requireActivity(), db!!.getAll(fromTime, toTime, `is`))
-        binding.history.adapter = adapter
+        if (`is`[2]) `in` += filter.up
+        if (`is`[1]) out += filter.down
+        if (`is`[3]) `in` += filter.borrow
+        if (`is`[4]) out += filter.borrowBack
+        if (`is`[5]) out += filter.lend
+        if (`is`[6]) `in` += filter.lendBack
+        binding.income.text = `in`.moneyFormat()
+        binding.outcome.text = out.moneyFormat()
+        binding.current.text = (`in` - out).moneyFormat()
+        viewModel.getDays(ArrayList(db!!.getAll(fromTime, toTime, `is`)))
     }
 
-    private fun setTime() {
-        requireContext().getTime {
-            selectTime = it
-            setText!!.text = selectTime.timeFormat()
-            if (setText === binding.from) {
-                fromTime = selectTime
-                cr!!.setFromTime(fromTime)
-            } else if (setText === binding.to) {
-                toTime = selectTime
-            }
-            refresh()
+    private fun setupMonths() {
+        val monthAdapter = DayAdapter {}
+        viewModel.days.observe(viewLifecycleOwner) { monthAdapter.submitList(it) }
+        binding.rvMonth.apply {
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+            adapter = monthAdapter
         }
     }
 
-
-    private fun setSetText(setText: TextView?) {
-        this.setText = setText
-    }
 }

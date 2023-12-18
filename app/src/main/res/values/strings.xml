@@ -7,7 +7,7 @@
     <string name="first">birinchi vaqt</string>
     <string name="now">Hozir</string>
     <string name="amount">Mablag‘</string>
-    <string name="desc">Izoh</string>
+    <string name="note">Izoh</string>
     <string name="todo" translatable="false">TODO</string>
     <string name="loading">Yuklanmoqda…</string>
     <string name="title_bill_type">Hisob turi</string>

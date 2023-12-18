@@ -1,10 +1,16 @@
 package org.hamroh.hisob.data
 
-data class History(
+data class DayModel(
+    val id: Int = 0,
+    val time: Long = 0L,
+    val transactions: ArrayList<Transaction> = arrayListOf(),
+)
+
+data class Transaction(
     var id: Int = 0,
     var amount: Double = 0.0,
     var time: Long = 0,
-    var desc: String = "",
+    var note: String = "",
     var type: Int = 0,
 )
 
@@ -17,4 +23,3 @@ data class Filter(
     var lendBack: Double = 0.0,
 )
 
-data class Savol(val id: Int = 0, var savol: String = "", var javob: String = "")

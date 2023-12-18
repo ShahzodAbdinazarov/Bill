@@ -27,28 +27,28 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         onCreate(db)
     }
 
-    fun add(history: History) {
+    fun add(transaction: Transaction) {
         val values = ContentValues()
-        values.put("money", history.amount.toString())
-        values.put("time", history.time.toString())
-        values.put("info", history.desc)
-        values.put("isIncome", history.type)
+        values.put("money", transaction.amount.toString())
+        values.put("time", transaction.time.toString())
+        values.put("info", transaction.note)
+        values.put("isIncome", transaction.type)
         db.insert("History", null, values)
     }
 
-    fun getAll(fromTime: Long, toTime: Long, `is`: BooleanArray): List<History> {
-        val data: MutableList<History> = ArrayList()
+    fun getAll(fromTime: Long, toTime: Long, `is`: BooleanArray): List<Transaction> {
+        val data: MutableList<Transaction> = ArrayList()
         val cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null)
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                val history = History()
-                history.id = cursor.getInt(0)
-                history.amount = (cursor.getString(1).toDouble())
-                history.time = (cursor.getString(2).toLong())
-                history.desc = (cursor.getString(3))
-                history.type = (cursor.getInt(4))
+                val transaction = Transaction()
+                transaction.id = cursor.getInt(0)
+                transaction.amount = (cursor.getString(1).toDouble())
+                transaction.time = (cursor.getString(2).toLong())
+                transaction.note = (cursor.getString(3))
+                transaction.type = (cursor.getInt(4))
                 if (cursor.getString(2).toLong() in (fromTime + 1) until toTime) {
-                    if (`is`[cursor.getInt(4) + 1]) data.add(history)
+                    if (`is`[cursor.getInt(4) + 1]) data.add(transaction)
                 }
             } while (cursor.moveToNext())
         }
@@ -56,9 +56,11 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         return data
     }
 
+    /**
     fun delete(id: Int) {
-        db.delete("History", "id = ?", arrayOf(id.toString()))
+    db.delete("History", "id = ?", arrayOf(id.toString()))
     }
+     */
 
     fun getIncome(fromTime: Long, toTime: Long): Filter {
         var up = 0.0
