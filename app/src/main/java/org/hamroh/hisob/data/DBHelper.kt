@@ -36,6 +36,19 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         db.insert("History", null, values)
     }
 
+    fun update(transaction: Transaction) {
+        val values = ContentValues()
+        values.put("money", transaction.amount.toString())
+        values.put("time", transaction.time.toString())
+        values.put("info", transaction.note)
+        values.put("isIncome", transaction.type)
+        db.update("History", values, "id = ?", arrayOf(transaction.id.toString()))
+    }
+
+    fun delete(id: Int) {
+        db.delete("History", "id = ?", arrayOf(id.toString()))
+    }
+
     fun getAll(fromTime: Long, toTime: Long, `is`: BooleanArray): List<Transaction> {
         val data: MutableList<Transaction> = ArrayList()
         val cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null)
@@ -56,11 +69,6 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         return data
     }
 
-    /**
-    fun delete(id: Int) {
-    db.delete("History", "id = ?", arrayOf(id.toString()))
-    }
-     */
 
     fun getIncome(fromTime: Long, toTime: Long): Filter {
         var up = 0.0

@@ -12,20 +12,16 @@ import org.hamroh.hisob.databinding.ItemDayBinding
 import org.hamroh.hisob.utils.getDate
 import kotlin.properties.Delegates
 
-class DayAdapter(private var onItemClick: ((DayModel) -> Unit)? = null) : ListAdapter<DayModel, DayAdapter.ViewHolder>(DIFF_UTIL()) {
+class DayAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : ListAdapter<DayModel, DayAdapter.ViewHolder>(DIFF_UTIL()) {
 
     private class DIFF_UTIL : DiffUtil.ItemCallback<DayModel>() {
         override fun areItemsTheSame(oldItem: DayModel, newItem: DayModel): Boolean = oldItem.time == newItem.time
         override fun areContentsTheSame(oldItem: DayModel, newItem: DayModel): Boolean = oldItem == newItem
     }
 
-    class ViewHolder(private val binding: ItemDayBinding, onItemClick: ((DayModel) -> Unit)?) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemDayBinding, private val onItemClick: ((Transaction) -> Unit)?) : RecyclerView.ViewHolder(binding.root) {
 
         private var day by Delegates.notNull<DayModel>()
-
-        init {
-            itemView.setOnClickListener { onItemClick?.invoke(day) }
-        }
 
         fun bind(newDay: DayModel) {
             this.day = newDay
@@ -37,7 +33,7 @@ class DayAdapter(private var onItemClick: ((DayModel) -> Unit)? = null) : ListAd
         }
 
         private fun setupDays(transactions: ArrayList<Transaction>) {
-            val transactionAdapter = TransactionAdapter {}
+            val transactionAdapter = TransactionAdapter { onItemClick?.invoke(it) }
 
             binding.rvTransaction.apply {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)//.apply { reverseLayout = true }

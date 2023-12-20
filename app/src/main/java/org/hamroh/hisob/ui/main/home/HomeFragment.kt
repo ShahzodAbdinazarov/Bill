@@ -15,6 +15,7 @@ import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
+import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
 import org.hamroh.hisob.utils.SharedPrefs
 import org.hamroh.hisob.utils.getTime
 import org.hamroh.hisob.utils.moneyFormat
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         refresh()
 
-        setupMonths()
+        setupTransactionList()
 
         binding.from.text = fromTime.timeFormat()
         binding.fab.setOnClickListener {
@@ -210,12 +211,18 @@ class HomeFragment : Fragment() {
         viewModel.getDays(ArrayList(db!!.getAll(fromTime, toTime, `is`)))
     }
 
-    private fun setupMonths() {
-        val monthAdapter = DayAdapter {}
-        viewModel.days.observe(viewLifecycleOwner) { monthAdapter.submitList(it) }
-        binding.rvMonth.apply {
+    private fun setupTransactionList() {
+        val transactions = DayAdapter {
+            val editTransaction = EditTransactionDialog()
+            editTransaction.money = money
+            editTransaction.transaction = it
+            editTransaction.onClick = { refresh() }
+            editTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
+        }
+        viewModel.days.observe(viewLifecycleOwner) { transactions.submitList(it) }
+        binding.rvTransaction.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            adapter = monthAdapter
+            adapter = transactions
         }
     }
 

@@ -17,4 +17,10 @@
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" />
 
+    <dialog
+        android:id="@+id/editTransactionDialog"
+        android:name="org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog"
+        android:label="EditTransactionDialog"
+        tools:layout="@layout/fragment_edit_transaction" />
+
 </navigation>

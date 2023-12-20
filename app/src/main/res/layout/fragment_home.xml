@@ -148,7 +148,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/todo"
                 android:padding="4dp"
-                android:src="@drawable/expense" />
+                android:src="@drawable/income" />
 
             <ImageView
                 android:id="@+id/twoFilter"
@@ -157,7 +157,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/todo"
                 android:padding="4dp"
-                android:src="@drawable/income" />
+                android:src="@drawable/expense" />
 
             <ImageView
                 android:id="@+id/threeFilter"
@@ -198,7 +198,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_month"
+            android:id="@+id/rv_transaction"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
