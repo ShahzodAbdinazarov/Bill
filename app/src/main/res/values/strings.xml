@@ -23,4 +23,7 @@
     <string name="type_error">Amaliyotni turini tanlang!</string>
     <string name="your_name">Ismingiz?</string>
     <string name="enter_your_name">Ismingizni kiriting!</string>
+    <string name="title_delete">Siz rostdan ham bu amaliyotni o\'chirmoqchimisiz?</string>
+    <string name="no">Yo‘q</string>
+    <string name="yes">Ha</string>
 </resources>

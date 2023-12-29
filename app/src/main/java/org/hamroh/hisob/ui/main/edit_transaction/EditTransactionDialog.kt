@@ -1,10 +1,13 @@
 package org.hamroh.hisob.ui.main.edit_transaction
 
+import android.app.Dialog
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.hamroh.hisob.R
@@ -88,10 +91,24 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
     }
 
     private fun deleteTransaction() {
-        val db = DBHelper(requireContext())
-        db.delete(transaction.id)
-        onClick?.invoke(true)
-        dismiss()
+        val dialog = Dialog(requireContext(), R.style.DeleteDialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_delete_transaction)
+
+        val tvNo: TextView = dialog.findViewById(R.id.tv_no)
+        val tvYes: TextView = dialog.findViewById(R.id.tv_yes)
+
+        tvNo.setOnClickListener { dialog.dismiss() }
+        tvYes.setOnClickListener {
+            val db = DBHelper(requireContext())
+            db.delete(transaction.id)
+            onClick?.invoke(true)
+            dialog.dismiss()
+            dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun validation(): Boolean {
