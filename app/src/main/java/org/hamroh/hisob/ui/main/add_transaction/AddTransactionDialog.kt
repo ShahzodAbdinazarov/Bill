@@ -19,7 +19,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
 
     private var selectTime: Long = System.currentTimeMillis()
     private var type: Int = -1
-    var money = 0.0
+    var currentAmount = 0.0
     private var _binding: FragmentAddTransactionBinding? = null
     private val binding get() = _binding!!
     var onClick: ((Boolean) -> Unit)? = null
@@ -70,7 +70,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
             binding.etAmount.error = "Mablag‘ni kiriting!"
             binding.etAmount.requestFocus()
             false
-        } else if (binding.etAmount.text.toString().toDouble() > money && (type == 0 || type == 3 || type == 4)) {
+        } else if (binding.etAmount.text.toString().toDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
             binding.etAmount.error = "Yetarli mablag‘ mavjud emas!"
             binding.etAmount.requestFocus()
             false

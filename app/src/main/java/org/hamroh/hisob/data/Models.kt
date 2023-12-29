@@ -15,12 +15,12 @@ data class Transaction(
 )
 
 data class Filter(
-    var up: Double = 0.0,
-    var down: Double = 0.0,
+    var income: Double = 0.0,
+    var expence: Double = 0.0,
     var borrow: Double = 0.0,
     var borrowBack: Double = 0.0,
-    var lend: Double = 0.0,
-    var lendBack: Double = 0.0,
+    var lending: Double = 0.0,
+    var lendingBack: Double = 0.0,
 )
 
 data class TypeFilter(

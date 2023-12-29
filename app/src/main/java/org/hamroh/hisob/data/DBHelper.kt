@@ -49,7 +49,7 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         db.delete("History", "id = ?", arrayOf(id.toString()))
     }
 
-    fun getAll(fromTime: Long, toTime: Long, `is`: BooleanArray): List<Transaction> {
+    fun getAll(allFilter: AllFilter): List<Transaction> {
         val data: MutableList<Transaction> = ArrayList()
         val cursor = db.rawQuery("SELECT * FROM History ORDER BY time DESC", null)
         if (cursor != null && cursor.moveToFirst()) {
@@ -60,8 +60,15 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
                 transaction.time = (cursor.getString(2).toLong())
                 transaction.note = (cursor.getString(3))
                 transaction.type = (cursor.getInt(4))
-                if (cursor.getString(2).toLong() in (fromTime + 1) until toTime) {
-                    if (`is`[cursor.getInt(4) + 1]) data.add(transaction)
+                if (cursor.getString(2).toLong() in (allFilter.timeFilter.fromTime + 1) until allFilter.timeFilter.toTime) {
+                    when (cursor.getInt(4)) {
+                        0 -> if (allFilter.typeFilter.expence) data.add(transaction)
+                        1 -> if (allFilter.typeFilter.income) data.add(transaction)
+                        2 -> if (allFilter.typeFilter.borrow) data.add(transaction)
+                        3 -> if (allFilter.typeFilter.borrowBack) data.add(transaction)
+                        4 -> if (allFilter.typeFilter.lending) data.add(transaction)
+                        5 -> if (allFilter.typeFilter.lendingBack) data.add(transaction)
+                    }
                 }
             } while (cursor.moveToNext())
         }
@@ -70,7 +77,7 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
     }
 
 
-    fun getIncome(fromTime: Long, toTime: Long): Filter {
+    fun getIncome(allFilter: AllFilter): Filter {
         var up = 0.0
         var down = 0.0
         var borrow = 0.0
@@ -81,7 +88,7 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 val type = cursor.getInt(4)
-                if (cursor.getString(2).toLong() in (fromTime + 1) until toTime
+                if (cursor.getString(2).toLong() in (allFilter.timeFilter.fromTime + 1) until allFilter.timeFilter.toTime
                 ) {
                     when (type) {
                         0 -> down += cursor.getString(1).toDouble()
@@ -113,7 +120,7 @@ class DBHelper internal constructor(context: Context?) : SQLiteOpenHelper(contex
                     }
                 } while (cursor.moveToNext())
             }
-            val (_, down) = getIncome(0, currentTime)
+            val (_, down) = getIncome(AllFilter(timeFilter = TimeFilter(0, currentTime)))
             return down / ((currentTime - time) / 86400000 + 1)
         }
 }
