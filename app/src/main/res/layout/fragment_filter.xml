@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.add_transaction.AddTransactionDialog">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-40dp"
+        app:cardBackgroundColor="@color/bg"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="200dp"
+            android:orientation="vertical">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="20dp"
+                        app:cardBackgroundColor="@color/medium"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="24dp"
+                            app:strokeWidth="0dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_close"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="12dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_close" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="24dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?selectableItemBackground"
+                                android:gravity="center"
+                                android:text="@string/filter"
+                                android:textColor="@color/black"
+                                android:textSize="18sp" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="10dp"
+                            app:cardCornerRadius="24dp"
+                            app:strokeWidth="0dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_save"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="12dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_done" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/medium">
+
+                            <TextView
+                                android:id="@+id/tv_from_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:text="@string/from_time"
+                                android:textColor="@color/reverse"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/medium">
+
+                            <TextView
+                                android:id="@+id/tv_to_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:text="@string/to_time"
+                                android:textColor="@color/reverse"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_income"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_income"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/income"
+                                app:tint="@color/income" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_expense"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_expense"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_expense"
+                                app:tint="@color/expense" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_borrow"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_borrow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_borrow"
+                                app:tint="@color/borrow" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_borrow_back"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_borrow_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_borrow_back"
+                                app:tint="@color/borrow" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_lending"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_lending"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/lend"
+                                app:tint="@color/lending" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mv_lending_back"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="4dp"
+                            app:cardBackgroundColor="@color/max"
+                            app:cardCornerRadius="30dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/reverse"
+                            app:strokeWidth="1dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_lending_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/lend_back"
+                                app:tint="@color/lending" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

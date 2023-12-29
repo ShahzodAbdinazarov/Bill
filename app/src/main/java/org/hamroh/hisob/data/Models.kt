@@ -23,3 +23,22 @@ data class Filter(
     var lendBack: Double = 0.0,
 )
 
+data class TypeFilter(
+    var income: Boolean = true,
+    var expence: Boolean = true,
+    var borrow: Boolean = true,
+    var borrowBack: Boolean = true,
+    var lending: Boolean = true,
+    var lendingBack: Boolean = true,
+)
+
+data class TimeFilter(
+    var fromTime: Long = 0L,
+    var toTime: Long = System.currentTimeMillis(),
+)
+
+data class AllFilter(
+    var typeFilter: TypeFilter = TypeFilter(),
+    var timeFilter: TimeFilter = TimeFilter(),
+)
+

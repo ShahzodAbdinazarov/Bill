@@ -7,16 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import org.hamroh.hisob.R
+import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
+import org.hamroh.hisob.ui.main.filter.FilterDialog
 import org.hamroh.hisob.ui.main.profile.ProfileDialog
 import org.hamroh.hisob.utils.SharedPrefs
 import org.hamroh.hisob.utils.getStartOfMonth
@@ -27,6 +28,7 @@ import kotlin.math.floor
 
 class HomeFragment : Fragment() {
 
+    private var allFilter: AllFilter = AllFilter()
     private val viewModel: HomeViewModel by viewModels()
 
     private val `is` = booleanArrayOf(true, true, true, true, true, true, true)
@@ -57,6 +59,18 @@ class HomeFragment : Fragment() {
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
 
+        binding.ibFilter.setOnClickListener {
+            val filter = FilterDialog()
+            filter.allFilter = allFilter
+            filter.onClick = {
+                allFilter = it
+                refresh()
+            }
+            filter.show(requireActivity().supportFragmentManager, "FilterDialog")
+        }
+
+        /*
+
         binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
         var more = true
         binding.expend.setOnClickListener {
@@ -70,7 +84,7 @@ class HomeFragment : Fragment() {
             more = !more
         }
         clickExpends()
-
+*/
         return binding.root
     }
 

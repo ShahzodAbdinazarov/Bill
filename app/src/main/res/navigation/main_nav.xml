@@ -22,10 +22,17 @@
         android:name="org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog"
         android:label="EditTransactionDialog"
         tools:layout="@layout/fragment_edit_transaction" />
+
     <dialog
         android:id="@+id/profileDialog"
         android:name="org.hamroh.hisob.ui.main.profile.ProfileDialog"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <dialog
+        android:id="@+id/filterDialog"
+        android:name="org.hamroh.hisob.ui.main.filter.FilterDialog"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
 
 </navigation>
