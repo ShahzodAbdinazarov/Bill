@@ -70,10 +70,10 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
 
         private fun setupType() {
             when (transaction.type) {
-                0 -> binding.ivType.setImageResource(R.drawable.expense)
+                0 -> binding.ivType.setImageResource(R.drawable.ic_expense)
                 1 -> binding.ivType.setImageResource(R.drawable.income)
-                2 -> binding.ivType.setImageResource(R.drawable.borrow)
-                3 -> binding.ivType.setImageResource(R.drawable.borrow_back)
+                2 -> binding.ivType.setImageResource(R.drawable.ic_borrow)
+                3 -> binding.ivType.setImageResource(R.drawable.ic_borrow_back)
                 4 -> binding.ivType.setImageResource(R.drawable.lend)
                 5 -> binding.ivType.setImageResource(R.drawable.lend_back)
                 else -> {}

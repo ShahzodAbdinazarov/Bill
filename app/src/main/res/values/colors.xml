@@ -9,5 +9,7 @@
     <color name="borrow">#D6AD7C</color>
     <color name="lending">#3D58DB</color>
 
+    <color name="max">#FFFFFFFF</color>
+    <color name="reverse">#FF000000</color>
     <color name="bg">#F2F3F8</color>
 </resources>

@@ -145,7 +145,7 @@
                                     android:contentDescription="@string/app_name"
                                     android:paddingVertical="6dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/expense"
+                                    android:src="@drawable/ic_expense"
                                     app:tint="@color/white" />
 
                             </com.google.android.material.card.MaterialCardView>
@@ -169,7 +169,7 @@
                                     android:contentDescription="@string/app_name"
                                     android:paddingVertical="6dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/borrow"
+                                    android:src="@drawable/ic_borrow"
                                     app:tint="@color/black" />
 
                             </com.google.android.material.card.MaterialCardView>
@@ -193,7 +193,7 @@
                                     android:contentDescription="@string/app_name"
                                     android:paddingVertical="6dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/borrow_back"
+                                    android:src="@drawable/ic_borrow_back"
                                     app:tint="#000" />
 
                             </com.google.android.material.card.MaterialCardView>
@@ -277,7 +277,7 @@
                                     android:contentDescription="@string/app_name"
                                     android:paddingVertical="6dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/expense"
+                                    android:src="@drawable/ic_expense"
                                     app:tint="@color/black" />
 
                                 <TextView

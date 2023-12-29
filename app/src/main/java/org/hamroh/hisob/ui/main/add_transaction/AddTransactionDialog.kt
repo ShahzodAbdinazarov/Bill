@@ -35,10 +35,10 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
 
         binding.bnType.setOnClickListener { clearType() }
 
-        binding.ibExpense.setOnClickListener { setupType(0, R.drawable.expense, R.color.expense, R.string.expense, R.color.white) }
+        binding.ibExpense.setOnClickListener { setupType(0, R.drawable.ic_expense, R.color.expense, R.string.expense, R.color.white) }
         binding.ibIncome.setOnClickListener { setupType(1, R.drawable.income, R.color.income, R.string.income, R.color.black) }
-        binding.ibBorrow.setOnClickListener { setupType(2, R.drawable.borrow, R.color.borrow, R.string.borrow, R.color.black) }
-        binding.ibBorrowBack.setOnClickListener { setupType(3, R.drawable.borrow_back, R.color.borrow, R.string.borrow_back, R.color.black) }
+        binding.ibBorrow.setOnClickListener { setupType(2, R.drawable.ic_borrow, R.color.borrow, R.string.borrow, R.color.black) }
+        binding.ibBorrowBack.setOnClickListener { setupType(3, R.drawable.ic_borrow_back, R.color.borrow, R.string.borrow_back, R.color.black) }
         binding.ibLending.setOnClickListener { setupType(4, R.drawable.lend, R.color.lending, R.string.lend, R.color.white) }
         binding.ibLendingBack.setOnClickListener { setupType(5, R.drawable.lend_back, R.color.lending, R.string.lend_back, R.color.white) }
 

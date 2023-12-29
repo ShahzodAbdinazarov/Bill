@@ -23,7 +23,7 @@
             android:contentDescription="@string/app_name"
             android:padding="6dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/expense" />
+            android:src="@drawable/ic_expense" />
 
     </com.google.android.material.card.MaterialCardView>
 

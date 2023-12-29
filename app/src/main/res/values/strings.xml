@@ -21,4 +21,6 @@
     <string name="summa">1,000</string>
     <string name="sum">so‘m</string>
     <string name="type_error">Amaliyotni turini tanlang!</string>
+    <string name="your_name">Ismingiz?</string>
+    <string name="enter_your_name">Ismingizni kiriting!</string>
 </resources>

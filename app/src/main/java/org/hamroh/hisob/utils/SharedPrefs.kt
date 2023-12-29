@@ -9,9 +9,13 @@ class SharedPrefs(context: Context) {
     companion object {
         private const val PREF = "MyAppPrefName"
         private const val FROM_TIME = "FROM_TIME"
+        private const val NAME = "NAME"
     }
 
     private val sharedPref: SharedPreferences = context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
+
+    fun setName(name: String) = put(NAME, name)
+    val name = get(NAME, String::class.java)
 
     fun getFromTime(): Long = get(FROM_TIME, Long::class.java)
     fun setFromTime(fromTime: Long) = put(FROM_TIME, fromTime)

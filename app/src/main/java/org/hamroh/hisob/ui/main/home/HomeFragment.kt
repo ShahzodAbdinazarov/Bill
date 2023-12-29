@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import org.hamroh.hisob.ui.main.profile.ProfileDialog
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
@@ -17,7 +18,6 @@ import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
 import org.hamroh.hisob.utils.SharedPrefs
-import org.hamroh.hisob.utils.getTime
 import org.hamroh.hisob.utils.moneyFormat
 import org.hamroh.hisob.utils.timeFormat
 import java.util.Calendar
@@ -39,32 +39,20 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+//        cr?.setFromTime()
         refresh()
 
         setupTransactionList()
+        setupProfile()
 
-        binding.from.text = fromTime.timeFormat()
+        binding.month.text = fromTime.timeFormat("MMMM")
         binding.fab.setOnClickListener {
             val addTransaction = AddTransactionDialog()
             addTransaction.money = money
             addTransaction.onClick = { refresh() }
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
-        binding.from.setOnClickListener {
-            requireContext().getTime {
-                fromTime = it
-                cr!!.setFromTime(fromTime)
-                binding.from.text = fromTime.timeFormat()
-                refresh()
-            }
-        }
-        binding.to.setOnClickListener {
-            requireContext().getTime {
-                toTime = it
-                binding.to.text = toTime.timeFormat()
-                refresh()
-            }
-        }
+
         binding.expendLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
         var more = true
         binding.expend.setOnClickListener {
@@ -80,6 +68,20 @@ class HomeFragment : Fragment() {
         clickExpends()
 
         return binding.root
+    }
+
+    private fun setupProfile() {
+        setName()
+        binding.bnProfile.setOnClickListener {
+            val profile = ProfileDialog()
+            profile.onClick = { requireActivity().recreate() }
+            profile.show(requireActivity().supportFragmentManager, "ProfileDialog")
+        }
+    }
+
+    private fun setName() {
+        val name = SharedPrefs(requireContext()).name
+        binding.tvName.text = name.ifEmpty { getString(R.string.your_name) }
     }
 
     private fun clickExpends() {

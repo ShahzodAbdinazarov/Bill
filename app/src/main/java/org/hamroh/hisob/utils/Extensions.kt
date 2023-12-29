@@ -1,9 +1,12 @@
 package org.hamroh.hisob.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import org.hamroh.hisob.data.DayModel
 import org.hamroh.hisob.data.Transaction
 import java.text.NumberFormat
@@ -12,6 +15,10 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+fun Activity.closeKeyboard(editText: EditText) {
+    val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+}
 fun Long.timeFormat(format: String = "dd-MMM, yyyy, HH:mm"): String = SimpleDateFormat(format, Locale.forLanguageTag("uz")).format(Date(this))
 
 fun Double.moneyFormat(): String = NumberFormat.getCurrencyInstance(Locale("uz", "UZ")).format(this)

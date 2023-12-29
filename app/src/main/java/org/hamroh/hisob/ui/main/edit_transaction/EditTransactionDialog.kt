@@ -64,10 +64,10 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
     private fun setType(i: Int) {
         when (i) {
-            0 -> setupType(0, R.drawable.expense, R.color.expense, R.string.expense, R.color.white)
+            0 -> setupType(0, R.drawable.ic_expense, R.color.expense, R.string.expense, R.color.white)
             1 -> setupType(1, R.drawable.income, R.color.income, R.string.income, R.color.black)
-            2 -> setupType(2, R.drawable.borrow, R.color.borrow, R.string.borrow, R.color.black)
-            3 -> setupType(3, R.drawable.borrow_back, R.color.borrow, R.string.borrow_back, R.color.black)
+            2 -> setupType(2, R.drawable.ic_borrow, R.color.borrow, R.string.borrow, R.color.black)
+            3 -> setupType(3, R.drawable.ic_borrow_back, R.color.borrow, R.string.borrow_back, R.color.black)
             4 -> setupType(4, R.drawable.lend, R.color.lending, R.string.lend, R.color.white)
             5 -> setupType(5, R.drawable.lend_back, R.color.lending, R.string.lend_back, R.color.white)
         }
