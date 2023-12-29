@@ -27,6 +27,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_transaction"
                 android:layout_width="match_parent"
+                android:splitMotionEvents="false"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

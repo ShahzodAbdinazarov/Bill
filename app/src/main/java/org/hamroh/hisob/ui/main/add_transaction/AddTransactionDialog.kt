@@ -29,6 +29,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
+        binding.ibClose.setOnClickListener { dismiss() }
 
         setTime(System.currentTimeMillis())
         binding.tvTime.setOnClickListener { requireActivity().getTime { setTime(it) } }
@@ -42,7 +43,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
         binding.ibLending.setOnClickListener { setupType(4, R.drawable.lend, R.color.lending, R.string.lend, R.color.white) }
         binding.ibLendingBack.setOnClickListener { setupType(5, R.drawable.lend_back, R.color.lending, R.string.lend_back, R.color.white) }
 
-        binding.tvSave.setOnClickListener { saveTransaction() }
+        binding.ibSave.setOnClickListener { saveTransaction() }
 
         return binding.root
     }

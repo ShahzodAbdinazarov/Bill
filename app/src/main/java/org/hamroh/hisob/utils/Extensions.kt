@@ -15,10 +15,22 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+fun getStartOfMonth(): Long {
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+
+    return calendar.timeInMillis
+}
+
 fun Activity.closeKeyboard(editText: EditText) {
     val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
 }
+
 fun Long.timeFormat(format: String = "dd-MMM, yyyy, HH:mm"): String = SimpleDateFormat(format, Locale.forLanguageTag("uz")).format(Date(this))
 
 fun Double.moneyFormat(): String = NumberFormat.getCurrencyInstance(Locale("uz", "UZ")).format(this)

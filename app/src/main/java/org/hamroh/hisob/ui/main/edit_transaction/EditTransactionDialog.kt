@@ -29,7 +29,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentEditTransactionBinding.inflate(inflater, container, false)
-
+        binding.ibClose.setOnClickListener { dismiss() }
 
         setTime(System.currentTimeMillis())
         binding.tvTime.setOnClickListener { requireActivity().getTime { setTime(it) } }
@@ -43,7 +43,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
         binding.ibLending.setOnClickListener { setType(4) }
         binding.ibLendingBack.setOnClickListener { setType(5) }
 
-        binding.tvSave.setOnClickListener { saveTransaction() }
+        binding.ibSave.setOnClickListener { saveTransaction() }
         binding.ibDelete.setOnClickListener { deleteTransaction() }
 
         setupTransaction()

@@ -3,6 +3,7 @@ package org.hamroh.hisob.ui.main.home
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,15 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import org.hamroh.hisob.ui.main.profile.ProfileDialog
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DBHelper
 import org.hamroh.hisob.data.Filter
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
+import org.hamroh.hisob.ui.main.profile.ProfileDialog
 import org.hamroh.hisob.utils.SharedPrefs
+import org.hamroh.hisob.utils.getStartOfMonth
 import org.hamroh.hisob.utils.moneyFormat
 import org.hamroh.hisob.utils.timeFormat
 import java.util.Calendar
@@ -39,7 +41,9 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-//        cr?.setFromTime()
+        cr = SharedPrefs(requireContext())
+        cr?.setFromTime(getStartOfMonth())
+        Log.e("TAG", "onCreateView: ${cr?.getFromTime()?.timeFormat()}")
         refresh()
 
         setupTransactionList()

@@ -26,7 +26,7 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
         private lateinit var transaction: Transaction
 
         init {
-            itemView.setOnClickListener { onItemClick?.invoke(transaction) }
+            binding.layout.setOnClickListener { onItemClick?.invoke(transaction) }
         }
 
         @SuppressLint("ResourceAsColor", "SetTextI18n")

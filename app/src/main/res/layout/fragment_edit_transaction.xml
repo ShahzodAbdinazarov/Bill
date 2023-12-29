@@ -46,6 +46,26 @@
                         android:layout_marginHorizontal="20dp">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="24dp"
+                            app:strokeWidth="0dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_close"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="12dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_close" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:layout_weight="1"
@@ -85,6 +105,26 @@
                                 android:padding="12dp"
                                 android:scaleType="centerCrop"
                                 android:src="@android:drawable/ic_menu_delete" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="10dp"
+                            app:cardCornerRadius="24dp"
+                            app:strokeWidth="0dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_save"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/app_name"
+                                android:padding="12dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_done" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -348,6 +388,7 @@
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="16dp"
                         android:layout_weight="1"
+                        android:layout_marginBottom="50dp"
                         android:minHeight="200dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="16dp"
@@ -371,33 +412,6 @@
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_gravity="bottom"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="70dp"
-                app:cardBackgroundColor="@color/income"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
-
-                <TextView
-                    android:id="@+id/tv_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:text="@string/save"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
