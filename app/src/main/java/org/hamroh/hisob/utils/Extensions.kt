@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 /*
 fun getStartOfMonth(): Long {
     val calendar = Calendar.getInstance()
@@ -81,7 +82,8 @@ fun ArrayList<Transaction>.getDays(): ArrayList<DayModel> {
     for (i in 1 until this.size) {
         if (this[i - 1].time.startDay() != this[i].time.startDay()) {
             var helperAmount = 0.0
-            for (j in 0 until helperList.size) helperAmount += helperList[j].amount
+            for (j in 0 until helperList.size) if (helperList[j].type == 0 || helperList[j].type == 3 || helperList[j].type == 4)
+                helperAmount -= helperList[j].amount else helperAmount += helperList[j].amount
             dayList.add(DayModel(time = this[i - 1].time, transactions = helperList, amount = helperAmount))
             helperList = arrayListOf()
         }

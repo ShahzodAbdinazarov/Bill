@@ -17,7 +17,7 @@ data class Transaction(
 
 data class Filter(
     var income: Double = 0.0,
-    var expence: Double = 0.0,
+    var expense: Double = 0.0,
     var borrow: Double = 0.0,
     var borrowBack: Double = 0.0,
     var lending: Double = 0.0,

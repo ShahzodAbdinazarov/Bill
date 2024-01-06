@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
         var incomeAmount = 0.0
         var expenseAmount = 0.0
         incomeAmount += filter.income
-        expenseAmount += filter.expence
+        expenseAmount += filter.expense
         incomeAmount += filter.borrow
         expenseAmount += filter.borrowBack
         expenseAmount += filter.lending
@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
         incomeAmount = 0.0
         expenseAmount = 0.0
         if (allFilter.typeFilter.income) incomeAmount += filter.income
-        if (allFilter.typeFilter.expence) expenseAmount += filter.expence
+        if (allFilter.typeFilter.expence) expenseAmount += filter.expense
         if (allFilter.typeFilter.borrow) incomeAmount += filter.borrow
         if (allFilter.typeFilter.borrowBack) expenseAmount += filter.borrowBack
         if (allFilter.typeFilter.lending) expenseAmount += filter.lending
