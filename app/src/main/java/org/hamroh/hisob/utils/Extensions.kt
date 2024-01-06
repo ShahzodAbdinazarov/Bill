@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
+/*
 fun getStartOfMonth(): Long {
     val calendar = Calendar.getInstance()
     calendar.set(Calendar.DAY_OF_MONTH, 1)
@@ -25,7 +25,7 @@ fun getStartOfMonth(): Long {
 
     return calendar.timeInMillis
 }
-
+*/
 fun Activity.closeKeyboard(editText: EditText) {
     val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
@@ -80,7 +80,9 @@ fun ArrayList<Transaction>.getDays(): ArrayList<DayModel> {
     if (this.size > 0) helperList.add(this[0])
     for (i in 1 until this.size) {
         if (this[i - 1].time.startDay() != this[i].time.startDay()) {
-            dayList.add(DayModel(time = this[i - 1].time, transactions = helperList))
+            var helperAmount = 0.0
+            for (j in 0 until helperList.size) helperAmount += helperList[j].amount
+            dayList.add(DayModel(time = this[i - 1].time, transactions = helperList, amount = helperAmount))
             helperList = arrayListOf()
         }
         helperList.add(this[i])

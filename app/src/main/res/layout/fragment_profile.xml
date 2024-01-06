@@ -19,53 +19,87 @@
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/middle"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/ib_close"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:adjustViewBounds="true"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/app_name"
-                    android:padding="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_close" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="100dp"
-                    android:layout_height="16sp"
-                    android:layout_gravity="center"
-                    android:layout_margin="20dp"
-                    app:cardBackgroundColor="@color/medium"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp" />
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/max"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="5dp"
+                    app:strokeWidth="0dp">
 
-                <TextView
+                    <ImageButton
+                        android:id="@+id/ib_close"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/app_name"
+                        android:padding="12dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_close" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/max"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="5dp"
+                    app:strokeWidth="0dp">
 
-                <ImageButton
-                    android:id="@+id/ib_done"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:adjustViewBounds="true"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/app_name"
-                    android:padding="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_done" />
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center"
+                        android:text="@string/profile"
+                        android:textColor="@color/reverse"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/max"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="5dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageButton
+                        android:id="@+id/ib_save"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/app_name"
+                        android:padding="12dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_done" />
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
@@ -76,7 +110,7 @@
                 app:cardBackgroundColor="@color/max"
                 app:cardCornerRadius="40dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/medium"
+                app:strokeColor="@color/middle"
                 app:strokeWidth="1dp">
 
                 <EditText

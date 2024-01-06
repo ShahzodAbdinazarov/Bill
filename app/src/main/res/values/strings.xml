@@ -33,4 +33,5 @@
     <string name="time_filter">Vaqt filter</string>
     <string name="from_time">From time</string>
     <string name="to_time">To time</string>
+    <string name="profile">Profil</string>
 </resources>

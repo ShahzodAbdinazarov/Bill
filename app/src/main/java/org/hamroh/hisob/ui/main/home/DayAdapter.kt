@@ -10,6 +10,7 @@ import org.hamroh.hisob.data.DayModel
 import org.hamroh.hisob.data.Transaction
 import org.hamroh.hisob.databinding.ItemDayBinding
 import org.hamroh.hisob.utils.getDate
+import org.hamroh.hisob.utils.moneyFormat
 import kotlin.properties.Delegates
 
 class DayAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : ListAdapter<DayModel, DayAdapter.ViewHolder>(DIFF_UTIL()) {
@@ -27,6 +28,7 @@ class DayAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : Lis
             this.day = newDay
 
             binding.tvName.text = day.time.getDate("dd-MMMM")
+            binding.tvAmount.text = day.amount.moneyFormat()
 
             setupDays(day.transactions)
 

@@ -29,7 +29,7 @@ class ProfileDialog : BottomSheetDialogFragment() {
         binding.etName.requestFocus()
         binding.etName.setSelection(binding.etName.text.toString().length)
 
-        binding.ibDone.setOnClickListener {
+        binding.ibSave.setOnClickListener {
             if (validation()) {
                 SharedPrefs(requireContext()).setName(binding.etName.text.toString().trim())
                 requireActivity().closeKeyboard(binding.etName)

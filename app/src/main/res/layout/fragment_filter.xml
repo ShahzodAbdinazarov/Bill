@@ -35,8 +35,8 @@
                         android:layout_width="100dp"
                         android:layout_height="6dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_margin="20dp"
-                        app:cardBackgroundColor="@color/medium"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/middle"
                         app:cardCornerRadius="3dp"
                         app:cardElevation="0dp"
                         app:strokeWidth="0dp" />
@@ -44,13 +44,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp">
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="10dp">
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_margin="10dp"
+                            app:cardBackgroundColor="@color/max"
                             app:cardCornerRadius="24dp"
+                            app:cardElevation="5dp"
                             app:strokeWidth="0dp">
 
                             <ImageButton
@@ -69,10 +72,11 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="48dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="@color/white"
+                            app:cardBackgroundColor="@color/max"
                             app:cardCornerRadius="24dp"
-                            app:cardElevation="0dp"
+                            app:cardElevation="5dp"
                             app:strokeWidth="0dp">
 
                             <TextView
@@ -82,7 +86,7 @@
                                 android:background="?selectableItemBackground"
                                 android:gravity="center"
                                 android:text="@string/filter"
-                                android:textColor="@color/black"
+                                android:textColor="@color/reverse"
                                 android:textSize="18sp" />
 
                         </com.google.android.material.card.MaterialCardView>
@@ -90,8 +94,10 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:layout_marginStart="10dp"
+                            android:layout_margin="10dp"
+                            app:cardBackgroundColor="@color/max"
                             app:cardCornerRadius="24dp"
+                            app:cardElevation="5dp"
                             app:strokeWidth="0dp">
 
                             <ImageButton
@@ -122,7 +128,7 @@
                             app:cardBackgroundColor="@color/max"
                             app:cardCornerRadius="30dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/medium">
+                            app:strokeColor="@color/middle">
 
                             <TextView
                                 android:id="@+id/tv_from_time"
@@ -146,7 +152,7 @@
                             app:cardBackgroundColor="@color/max"
                             app:cardCornerRadius="30dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/medium">
+                            app:strokeColor="@color/middle">
 
                             <TextView
                                 android:id="@+id/tv_to_time"

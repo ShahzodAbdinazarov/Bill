@@ -4,6 +4,7 @@ data class DayModel(
     val id: Int = 0,
     val time: Long = 0L,
     val transactions: ArrayList<Transaction> = arrayListOf(),
+    val amount: Double = 0.0
 )
 
 data class Transaction(
