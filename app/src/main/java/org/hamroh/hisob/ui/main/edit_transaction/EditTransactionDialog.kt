@@ -9,17 +9,22 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import org.hamroh.hisob.R
-import org.hamroh.hisob.data.DBHelper
-import org.hamroh.hisob.data.Transaction
+import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.FragmentEditTransactionBinding
-import org.hamroh.hisob.utils.getTime
-import org.hamroh.hisob.utils.timeFormat
+import org.hamroh.hisob.infra.utils.getDouble
+import org.hamroh.hisob.infra.utils.getTime
+import org.hamroh.hisob.infra.utils.timeFormat
+import org.hamroh.hisob.ui.main.home.HomeViewModel
 
+@AndroidEntryPoint
 class EditTransactionDialog : BottomSheetDialogFragment() {
 
     private var selectTime: Long = System.currentTimeMillis()
+    private val viewModel: HomeViewModel by viewModels()
     private var type: Int = -1
     var transaction = Transaction()
     var currentAmount = 0.0
@@ -63,7 +68,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
     private fun setNote(note: String) = binding.etNote.setText(note)
 
-    private fun setAmount(amount: Double) = binding.etAmount.setText((amount.toInt()).toString())
+    private fun setAmount(amount: Double) = binding.etAmount.setText(amount.toString())
 
     private fun setType(i: Int) {
         when (i) {
@@ -82,9 +87,8 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
     }
 
     private fun saveTransaction() {
-        val db = DBHelper(requireContext())
         if (validation()) {
-            db.update(Transaction(transaction.id, binding.etAmount.text.toString().toDouble(), selectTime, note = binding.etNote.text.toString(), type))
+            viewModel.updateTransaction(Transaction(transaction.id, binding.etAmount.text.toString().getDouble(), selectTime, note = binding.etNote.text.toString(), type))
             onClick?.invoke(true)
             dismiss()
         }
@@ -101,8 +105,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
         tvNo.setOnClickListener { dialog.dismiss() }
         tvYes.setOnClickListener {
-            val db = DBHelper(requireContext())
-            db.delete(transaction.id)
+            viewModel.deleteTransaction(transaction)
             onClick?.invoke(true)
             dialog.dismiss()
             dismiss()
@@ -119,7 +122,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
             binding.etAmount.error = "Mablag‘ni kiriting!"
             binding.etAmount.requestFocus()
             false
-        } else if (binding.etAmount.text.toString().toDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
+        } else if (binding.etAmount.text.toString().getDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
             binding.etAmount.error = "Yetarli mablag‘ mavjud emas!"
             binding.etAmount.requestFocus()
             false

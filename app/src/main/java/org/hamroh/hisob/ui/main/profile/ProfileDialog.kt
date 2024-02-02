@@ -9,8 +9,8 @@ import android.view.WindowManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.hamroh.hisob.R
 import org.hamroh.hisob.databinding.FragmentProfileBinding
-import org.hamroh.hisob.utils.SharedPrefs
-import org.hamroh.hisob.utils.closeKeyboard
+import org.hamroh.hisob.infra.utils.SharedPrefs
+import org.hamroh.hisob.infra.utils.closeKeyboard
 
 
 class ProfileDialog : BottomSheetDialogFragment() {

@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.DayModel
-import org.hamroh.hisob.data.Transaction
+import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.ItemDayBinding
-import org.hamroh.hisob.utils.getDate
-import org.hamroh.hisob.utils.moneyFormat
+import org.hamroh.hisob.infra.utils.getDate
+import org.hamroh.hisob.infra.utils.moneyFormat
 import kotlin.properties.Delegates
 
 class DayAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : ListAdapter<DayModel, DayAdapter.ViewHolder>(DIFF_UTIL()) {

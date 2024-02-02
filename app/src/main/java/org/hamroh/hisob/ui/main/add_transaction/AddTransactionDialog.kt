@@ -6,18 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import org.hamroh.hisob.R
-import org.hamroh.hisob.data.DBHelper
-import org.hamroh.hisob.data.Transaction
+import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.FragmentAddTransactionBinding
-import org.hamroh.hisob.utils.getTime
-import org.hamroh.hisob.utils.timeFormat
+import org.hamroh.hisob.infra.utils.etMoneyFormat
+import org.hamroh.hisob.infra.utils.getDouble
+import org.hamroh.hisob.infra.utils.getTime
+import org.hamroh.hisob.infra.utils.timeFormat
+import org.hamroh.hisob.ui.main.home.HomeViewModel
 
-
+@AndroidEntryPoint
 class AddTransactionDialog : BottomSheetDialogFragment() {
 
     private var selectTime: Long = System.currentTimeMillis()
+    private val viewModel: HomeViewModel by viewModels()
     private var type: Int = -1
     var currentAmount = 0.0
     private var _binding: FragmentAddTransactionBinding? = null
@@ -36,16 +41,21 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
 
         binding.bnType.setOnClickListener { clearType() }
 
+        setTypes()
+        binding.etAmount.etMoneyFormat()
+
+        binding.ibSave.setOnClickListener { saveTransaction() }
+
+        return binding.root
+    }
+
+    private fun setTypes() {
         binding.ibExpense.setOnClickListener { setupType(0, R.drawable.ic_expense, R.color.expense, R.string.expense, R.color.white) }
         binding.ibIncome.setOnClickListener { setupType(1, R.drawable.income, R.color.income, R.string.income, R.color.black) }
         binding.ibBorrow.setOnClickListener { setupType(2, R.drawable.ic_borrow, R.color.borrow, R.string.borrow, R.color.black) }
         binding.ibBorrowBack.setOnClickListener { setupType(3, R.drawable.ic_borrow_back, R.color.borrow, R.string.borrow_back, R.color.black) }
         binding.ibLending.setOnClickListener { setupType(4, R.drawable.lend, R.color.lending, R.string.lend, R.color.white) }
         binding.ibLendingBack.setOnClickListener { setupType(5, R.drawable.lend_back, R.color.lending, R.string.lend_back, R.color.white) }
-
-        binding.ibSave.setOnClickListener { saveTransaction() }
-
-        return binding.root
     }
 
     private fun setTime(time: Long) {
@@ -54,9 +64,15 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
     }
 
     private fun saveTransaction() {
-        val db = DBHelper(requireContext())
         if (validation()) {
-            db.add(Transaction(1, binding.etAmount.text.toString().toDouble(), selectTime, note = binding.etNote.text.toString(), type))
+            viewModel.addTransaction(
+                Transaction(
+                    amount = binding.etAmount.text.toString().getDouble(),
+                    time = selectTime,
+                    note = binding.etNote.text.toString(),
+                    type = type
+                )
+            )
             onClick?.invoke(true)
             dismiss()
         }
@@ -70,7 +86,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
             binding.etAmount.error = "Mablag‘ni kiriting!"
             binding.etAmount.requestFocus()
             false
-        } else if (binding.etAmount.text.toString().toDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
+        } else if (binding.etAmount.text.toString().getDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
             binding.etAmount.error = "Yetarli mablag‘ mavjud emas!"
             binding.etAmount.requestFocus()
             false

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.hamroh.hisob.R
-import org.hamroh.hisob.data.Transaction
+import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.ItemTransactionBinding
-import org.hamroh.hisob.utils.moneyFormat
-import org.hamroh.hisob.utils.timeFormat
+import org.hamroh.hisob.infra.utils.moneyFormat
+import org.hamroh.hisob.infra.utils.timeFormat
 
 class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 

@@ -9,8 +9,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.databinding.FragmentFilterBinding
-import org.hamroh.hisob.utils.getTime
-import org.hamroh.hisob.utils.timeFormat
+import org.hamroh.hisob.infra.utils.getTime
+import org.hamroh.hisob.infra.utils.timeFormat
 
 
 class FilterDialog : BottomSheetDialogFragment() {
@@ -61,7 +61,7 @@ class FilterDialog : BottomSheetDialogFragment() {
             setTypes()
         }
         binding.ibExpense.setOnClickListener {
-            allFilter.typeFilter.expence = !allFilter.typeFilter.expence
+            allFilter.typeFilter.expense = !allFilter.typeFilter.expense
             setTypes()
         }
         binding.ibBorrow.setOnClickListener {
@@ -86,7 +86,7 @@ class FilterDialog : BottomSheetDialogFragment() {
     private fun setTypes() {
         if (!allFilter.typeFilter.income) binding.mvIncome.strokeColor = ContextCompat.getColor(requireContext(), R.color.max)
         else binding.mvIncome.strokeColor = ContextCompat.getColor(requireContext(), R.color.reverse)
-        if (!allFilter.typeFilter.expence) binding.mvExpense.strokeColor = ContextCompat.getColor(requireContext(), R.color.max)
+        if (!allFilter.typeFilter.expense) binding.mvExpense.strokeColor = ContextCompat.getColor(requireContext(), R.color.max)
         else binding.mvExpense.strokeColor = ContextCompat.getColor(requireContext(), R.color.reverse)
         if (!allFilter.typeFilter.borrow) binding.mvBorrow.strokeColor = ContextCompat.getColor(requireContext(), R.color.max)
         else binding.mvBorrow.strokeColor = ContextCompat.getColor(requireContext(), R.color.reverse)
