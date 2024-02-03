@@ -10,7 +10,7 @@ import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.data.transaction.TransactionDao
 import kotlin.concurrent.Volatile
 
-@Database(entities = [Transaction::class], version = 2, exportSchema = false)
+@Database(entities = [Transaction::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
@@ -25,13 +25,13 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).allowMainThreadQueries().addMigrations(MIGRATION_1_2(context)).build()
+                ).allowMainThreadQueries().addMigrations(MIGRATION_2_3(context)).build()
                 INSTANCE = instance
                 instance
             }
         }
 
-        private fun MIGRATION_1_2(context: Context): Migration = object : Migration(1, 2) {
+        private fun MIGRATION_2_3(context: Context): Migration = object : Migration(2, 3) {
             override fun migrate(db: SupportSQLiteDatabase) = AppMigration(context).migrateSQLiteToRoom(db)
         }
     }
