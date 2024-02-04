@@ -17,7 +17,7 @@ class ProfileDialog : BottomSheetDialogFragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    var onClick: ((Boolean) -> Unit)? = null
+    var onSave: ((Boolean) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,7 @@ class ProfileDialog : BottomSheetDialogFragment() {
                 SharedPrefs(requireContext()).setName(binding.etName.text.toString().trim())
                 requireActivity().closeKeyboard(binding.etName)
                 dismiss()
-                onClick?.invoke(true)
+                onSave?.invoke(true)
             } else binding.etName.error = getString(R.string.enter_your_name)
         }
 

@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.data.DayModel
 import org.hamroh.hisob.data.transaction.Transaction
 import java.text.DecimalFormat
@@ -30,6 +31,24 @@ fun getStartOfMonth(): Long {
     return calendar.timeInMillis
 }
 */
+
+fun ArrayList<Transaction>.filterla(allFilter: AllFilter): ArrayList<DayModel> {
+    val transactions = arrayListOf<Transaction>()
+    val list = ArrayList(this)
+    for (i in 0 until list.size) {
+        if (list[i].time > allFilter.timeFilter.fromTime && list[i].time < allFilter.timeFilter.toTime) {
+            when (list[i].type) {
+                0 -> if (allFilter.typeFilter.expense) transactions.add(list[i])
+                1 -> if (allFilter.typeFilter.income) transactions.add(list[i])
+                2 -> if (allFilter.typeFilter.borrow) transactions.add(list[i])
+                3 -> if (allFilter.typeFilter.borrowBack) transactions.add(list[i])
+                4 -> if (allFilter.typeFilter.lending) transactions.add(list[i])
+                else -> if (allFilter.typeFilter.lendingBack) transactions.add(list[i])
+            }
+        }
+    }
+    return transactions.getDays()
+}
 
 fun String.getDouble(): Double {
     var amount = ""
@@ -86,6 +105,13 @@ fun EditText.etMoneyFormat() {
     addTextChangedListener(textWatcher)
 }
 
+fun Activity.showSoftKeyboard(view: EditText) {
+    view.requestFocus()
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.showSoftInput(view, InputMethodManager.RESULT_SHOWN)
+    view.setSelection(view.length())
+}
+
 fun Activity.closeKeyboard(editText: EditText) {
     val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
@@ -94,6 +120,16 @@ fun Activity.closeKeyboard(editText: EditText) {
 fun Long.timeFormat(format: String = "dd-MMM, yyyy, HH:mm"): String = SimpleDateFormat(format, Locale.forLanguageTag("uz")).format(Date(this))
 
 fun Double.moneyFormat(): String = NumberFormat.getCurrencyInstance(Locale("uz", "UZ")).format(this)
+fun ArrayList<DayModel>.getAmount(): Double {
+    var currentAmount = 0.0
+    for (i in 0 until this.size) {
+        val ts = this[i].transactions
+        for (j in 0 until ts.size)
+            if (ts[j].type == 1 || ts[j].type == 2 || ts[j].type == 5) currentAmount += ts[j].amount
+            else currentAmount -= ts[j].amount
+    }
+    return currentAmount
+}
 
 fun Context.getTime(callback: (Long) -> Unit) {
     val calendar = Calendar.getInstance()

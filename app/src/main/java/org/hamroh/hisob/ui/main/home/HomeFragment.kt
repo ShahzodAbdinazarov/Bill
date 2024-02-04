@@ -6,29 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.AllFilter
+import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.infra.utils.SharedPrefs
+import org.hamroh.hisob.infra.utils.filterla
+import org.hamroh.hisob.infra.utils.getAmount
 import org.hamroh.hisob.infra.utils.moneyFormat
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
 import org.hamroh.hisob.ui.main.filter.FilterDialog
 import org.hamroh.hisob.ui.main.profile.ProfileDialog
 
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var allFilter = MutableLiveData<AllFilter>().apply { value = AllFilter() }
-    private val viewModel: HomeViewModel by viewModels()
-
-    private var currentAmount = 0.0
-
-    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var _binding: FragmentHomeBinding? = null
+    private var currentAmount = 0.0
+    private val viewModel: HomeViewModel by viewModels()
+    private var allFilter = AllFilter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -40,27 +42,48 @@ class HomeFragment : Fragment() {
         binding.fab.setOnClickListener {
             val addTransaction = AddTransactionDialog()
             addTransaction.currentAmount = currentAmount
-            addTransaction.onClick = { refresh() }
+            addTransaction.onInsert = viewModel::addTransaction
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
 
         binding.ibFilter.setOnClickListener {
             val filter = FilterDialog()
-            filter.allFilter = allFilter.value!!
-            filter.onClick = { allFilter.postValue(it) }
+            filter.allFilter = allFilter
+            filter.onChange = { allFilter = it;refresh() }
             filter.show(requireActivity().supportFragmentManager, "FilterDialog")
+        }
+
+        binding.rvTransaction.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (isRecyclerAtTop() && dy < 0 && binding.fabScrollTop.isShown) binding.fabScrollTop.hide()
+                else if (!isRecyclerAtTop() && dy > 0 && !binding.fabScrollTop.isShown) binding.fabScrollTop.show()
+            }
+        })
+
+        binding.fabScrollTop.setOnClickListener {
+            if (binding.rvTransaction.adapter != null && binding.rvTransaction.adapter!!.itemCount > 0)
+                binding.rvTransaction.smoothScrollToPosition(0)
         }
 
         return binding.root
     }
 
-    private fun refresh() = allFilter.observe(viewLifecycleOwner) { viewModel.getAllData(it) }
+    private fun isRecyclerAtTop(): Boolean {
+        val layoutManager = binding.rvTransaction.layoutManager as StaggeredGridLayoutManager
+        val firstVisibleItems = IntArray(layoutManager.spanCount)
+        layoutManager.findFirstCompletelyVisibleItemPositions(firstVisibleItems)
+        for (position in firstVisibleItems) if (position == 1) return true
+        return false
+    }
+
+    private fun refresh() = viewModel.getAllData()
 
     private fun setupProfile() {
         setName()
         binding.bnProfile.setOnClickListener {
             val profile = ProfileDialog()
-            profile.onClick = { requireActivity().recreate() }
+            profile.onSave = { setName() }
             profile.show(requireActivity().supportFragmentManager, "ProfileDialog")
         }
     }
@@ -71,22 +94,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTransactionList() {
-        val transactions = DayAdapter {
-            val editTransaction = EditTransactionDialog()
-            editTransaction.currentAmount = currentAmount
-            editTransaction.transaction = it
-            editTransaction.onClick = { refresh() }
-            editTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
-        }
+        val transactions = DayAdapter(::openEdit)
         viewModel.days.observe(viewLifecycleOwner) {
-            transactions.submitList(it)
-            currentAmount = 0.0
-            for (i in 0 until it.size) {
-                val ts = it[i].transactions
-                for (j in 0 until ts.size)
-                    if (ts[j].type == 1 || ts[j].type == 2 || ts[j].type == 5) currentAmount += ts[j].amount
-                    else currentAmount -= ts[j].amount
-            }
+            val list = it.filterla(allFilter)
+            transactions.submitList(list)
+            currentAmount = list.getAmount()
             binding.current.text = currentAmount.moneyFormat()
             binding.rvTransaction.post { binding.rvTransaction.smoothScrollToPosition(0) }
         }
@@ -94,6 +106,15 @@ class HomeFragment : Fragment() {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             adapter = transactions
         }
+    }
+
+    private fun openEdit(it: Transaction) {
+        val editTransaction = EditTransactionDialog()
+        editTransaction.currentAmount = currentAmount
+        editTransaction.transaction = it
+        editTransaction.onDelete = viewModel::deleteTransaction
+        editTransaction.onUpdate = viewModel::updateTransaction
+        editTransaction.show(requireActivity().supportFragmentManager, "EditTransactionDialog")
     }
 
 }

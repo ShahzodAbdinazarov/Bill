@@ -343,8 +343,12 @@
                         app:strokeWidth="0dp">
 
                         <LinearLayout
+                            android:id="@+id/bn_amount"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="?selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
 
                             <EditText
                                 android:id="@+id/et_amount"

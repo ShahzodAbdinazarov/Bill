@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.hamroh.hisob.R
@@ -17,20 +16,20 @@ import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.FragmentEditTransactionBinding
 import org.hamroh.hisob.infra.utils.getDouble
 import org.hamroh.hisob.infra.utils.getTime
+import org.hamroh.hisob.infra.utils.showSoftKeyboard
 import org.hamroh.hisob.infra.utils.timeFormat
-import org.hamroh.hisob.ui.main.home.HomeViewModel
 
 @AndroidEntryPoint
 class EditTransactionDialog : BottomSheetDialogFragment() {
 
     private var selectTime: Long = System.currentTimeMillis()
-    private val viewModel: HomeViewModel by viewModels()
     private var type: Int = -1
     var transaction = Transaction()
     var currentAmount = 0.0
     private var _binding: FragmentEditTransactionBinding? = null
     private val binding get() = _binding!!
-    var onClick: ((Boolean) -> Unit)? = null
+    var onUpdate: ((Transaction) -> Unit)? = null
+    var onDelete: ((Transaction) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +52,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
         binding.ibSave.setOnClickListener { saveTransaction() }
         binding.ibDelete.setOnClickListener { deleteTransaction() }
+        binding.bnAmount.setOnClickListener { requireActivity().showSoftKeyboard(binding.etAmount) }
 
         setupTransaction()
 
@@ -88,8 +88,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
     private fun saveTransaction() {
         if (validation()) {
-            viewModel.updateTransaction(Transaction(transaction.id, binding.etAmount.text.toString().getDouble(), selectTime, note = binding.etNote.text.toString(), type))
-            onClick?.invoke(true)
+            onUpdate?.invoke(Transaction(transaction.id, binding.etAmount.text.toString().getDouble(), selectTime, note = binding.etNote.text.toString(), type))
             dismiss()
         }
     }
@@ -105,8 +104,7 @@ class EditTransactionDialog : BottomSheetDialogFragment() {
 
         tvNo.setOnClickListener { dialog.dismiss() }
         tvYes.setOnClickListener {
-            viewModel.deleteTransaction(transaction)
-            onClick?.invoke(true)
+            onDelete?.invoke(transaction)
             dialog.dismiss()
             dismiss()
         }

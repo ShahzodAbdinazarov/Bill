@@ -18,7 +18,7 @@ class FilterDialog : BottomSheetDialogFragment() {
     var allFilter = AllFilter()
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
-    var onClick: ((AllFilter) -> Unit)? = null
+    var onChange: ((AllFilter) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class FilterDialog : BottomSheetDialogFragment() {
         setupType()
         setTypes()
         binding.ibSave.setOnClickListener {
-            onClick?.invoke(allFilter)
+            onChange?.invoke(allFilter)
             dismiss()
         }
 

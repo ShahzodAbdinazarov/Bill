@@ -367,8 +367,12 @@
                         app:strokeWidth="0dp">
 
                         <LinearLayout
+                            android:id="@+id/bn_amount"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="?selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
 
                             <EditText
                                 android:id="@+id/et_amount"
@@ -377,10 +381,10 @@
                                 android:autofillHints="amount"
                                 android:background="@color/transparent"
                                 android:hint="@string/summa"
-                                android:textColor="@color/reverse"
-                                android:textColorHint="@color/middle"
                                 android:inputType="numberDecimal"
                                 android:padding="20dp"
+                                android:textColor="@color/reverse"
+                                android:textColorHint="@color/middle"
                                 android:textSize="36sp" />
 
                             <TextView
@@ -415,10 +419,10 @@
                             android:background="@color/transparent"
                             android:gravity="top"
                             android:hint="@string/note"
-                            android:textColorHint="@color/middle"
-                            android:textColor="@color/reverse"
                             android:inputType="textCapSentences|textMultiLine"
                             android:padding="20dp"
+                            android:textColor="@color/reverse"
+                            android:textColorHint="@color/middle"
                             android:textSize="18sp" />
 
                     </com.google.android.material.card.MaterialCardView>

@@ -12,4 +12,5 @@
     <color name="max">#FF000000</color>
     <color name="reverse">#FFFFFFFF</color>
     <color name="bg">#0E1621</color>
+    <color name="bg_73">#BB0E1621</color>
 </resources>

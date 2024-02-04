@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.hamroh.hisob.R
@@ -15,19 +14,18 @@ import org.hamroh.hisob.databinding.FragmentAddTransactionBinding
 import org.hamroh.hisob.infra.utils.etMoneyFormat
 import org.hamroh.hisob.infra.utils.getDouble
 import org.hamroh.hisob.infra.utils.getTime
+import org.hamroh.hisob.infra.utils.showSoftKeyboard
 import org.hamroh.hisob.infra.utils.timeFormat
-import org.hamroh.hisob.ui.main.home.HomeViewModel
 
 @AndroidEntryPoint
 class AddTransactionDialog : BottomSheetDialogFragment() {
 
+    private val binding get() = _binding!!
+    private var _binding: FragmentAddTransactionBinding? = null
     private var selectTime: Long = System.currentTimeMillis()
-    private val viewModel: HomeViewModel by viewModels()
+    var onInsert: ((Transaction) -> Unit)? = null
     private var type: Int = -1
     var currentAmount = 0.0
-    private var _binding: FragmentAddTransactionBinding? = null
-    private val binding get() = _binding!!
-    var onClick: ((Boolean) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +43,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
         binding.etAmount.etMoneyFormat()
 
         binding.ibSave.setOnClickListener { saveTransaction() }
+        binding.bnAmount.setOnClickListener { requireActivity().showSoftKeyboard(binding.etAmount) }
 
         return binding.root
     }
@@ -65,7 +64,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
 
     private fun saveTransaction() {
         if (validation()) {
-            viewModel.addTransaction(
+            onInsert?.invoke(
                 Transaction(
                     amount = binding.etAmount.text.toString().getDouble(),
                     time = selectTime,
@@ -73,7 +72,6 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
                     type = type
                 )
             )
-            onClick?.invoke(true)
             dismiss()
         }
     }
