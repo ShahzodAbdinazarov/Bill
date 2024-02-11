@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.shimmer.startShimmer()
         refresh()
         setupTransactionList()
         setupProfile()
@@ -98,9 +99,13 @@ class HomeFragment : Fragment() {
         viewModel.days.observe(viewLifecycleOwner) {
             val list = it.filterla(allFilter)
             transactions.submitList(list)
-            currentAmount = list.getAmount()
-            binding.current.text = currentAmount.moneyFormat()
-            binding.rvTransaction.post { binding.rvTransaction.smoothScrollToPosition(0) }
+            binding.rvTransaction.post {
+                currentAmount = list.getAmount()
+                binding.current.text = currentAmount.moneyFormat()
+                binding.rvTransaction.smoothScrollToPosition(0)
+                binding.shimmer.stopShimmer()
+                binding.shimmer.visibility = View.GONE
+            }
         }
         binding.rvTransaction.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)

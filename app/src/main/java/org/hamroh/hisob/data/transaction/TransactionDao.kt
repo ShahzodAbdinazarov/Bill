@@ -11,13 +11,13 @@ import androidx.room.Update
 interface TransactionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addTransaction(task: Transaction)
+    suspend fun addTransaction(task: Transaction): Long
 
     @Update
-    suspend fun updateTransaction(task: Transaction)
+    suspend fun updateTransaction(task: Transaction): Int
 
     @Delete
-    suspend fun deleteTransaction(task: Transaction)
+    suspend fun deleteTransaction(task: Transaction): Int
 
     @Query("SELECT * FROM transaction_table ORDER BY time DESC")
     suspend fun readAllData(): List<Transaction>

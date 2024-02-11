@@ -12,7 +12,6 @@ import android.widget.EditText
 import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.data.DayModel
 import org.hamroh.hisob.data.transaction.Transaction
-import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -51,13 +50,8 @@ fun ArrayList<Transaction>.filterla(allFilter: AllFilter): ArrayList<DayModel> {
 }
 
 fun String.getDouble(): Double {
-    var amount = ""
-    val text = this
-    for (i in text.indices) if (text[i].isDigit() || text[i] == '.') amount += text[i]
-    amount = amount.ifEmpty { "0" }
-    if (amount.startsWith(".")) amount = "0$amount"
-    if (amount.endsWith(".")) amount = "${amount}0"
-
+    val filtered = this.filter { it.isDigit() || it == '.' }
+    val amount = filtered.ifEmpty { "0" }
     return amount.toDouble()
 }
 
@@ -66,39 +60,31 @@ fun EditText.etMoneyFormat() {
         override fun afterTextChanged(s: Editable?) {
             this@etMoneyFormat.removeTextChangedListener(this)
 
-            var amount = ""
-            var startDot = false
-            var endDot = false
-            val text = s.toString()
-            for (i in text.indices) if (text[i].isDigit() || text[i] == '.') amount += text[i]
-            amount = amount.ifEmpty { "0" }
-            if (amount.startsWith(".")) {
-                amount = "0$amount"
-                startDot = true
+            val amount = s.toString().replace(",", "")
+            val parsedValue = try {
+                val parsed = amount.getDouble()
+                val approx = (parsed * 100).toULong()
+                approx.toDouble() / 100
+            } catch (e: NumberFormatException) {
+                0.0
             }
-            if (amount.endsWith(".")) {
-                endDot = true
-                startDot = false
-                amount = "${amount}0"
-            }
-            var parsed = amount.toDouble()
-            val approx = (parsed * 100).toULong()
-            parsed = approx.toDouble() / 100
-            var formatted = DecimalFormat("#,###.##").format(parsed)
-            formatted = formatted.replace(",", ".")
-            formatted = formatted.replace(" ", ",")
-            if (startDot) formatted = "0.$formatted"
-            if (endDot) formatted = "$formatted."
-            if (formatted.equals("0")) formatted = ""
 
-            this@etMoneyFormat.setText(formatted)
-            this@etMoneyFormat.setSelection(formatted.length)
+            val formatted = if (parsedValue != 0.0) NumberFormat.getNumberInstance().format(parsedValue) else ""
+
+            val finalResult = when {
+                amount.startsWith(".") -> "0$formatted"
+                amount.endsWith(".") -> "$formatted."
+                amount.contains(".") -> "${formatted.substringBeforeLast('.')}.${amount.substringAfterLast('.').take(2)}"
+                else -> formatted
+            }
+
+            this@etMoneyFormat.setText(finalResult)
+            this@etMoneyFormat.setSelection(finalResult.length)
 
             this@etMoneyFormat.addTextChangedListener(this)
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
 

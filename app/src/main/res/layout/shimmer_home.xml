@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
+                app:cardBackgroundColor="@color/middle"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="3"
+                app:cardBackgroundColor="@color/middle"
+                app:cardCornerRadius="40dp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
+                app:cardBackgroundColor="@color/middle"
+                app:cardCornerRadius="20dp"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="4"
+                app:cardBackgroundColor="@color/middle"
+                app:cardCornerRadius="40dp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mv_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    app:cardBackgroundColor="@color/max"
+                    app:strokeColor="@color/middle">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/middle"
+                                app:cardCornerRadius="20dp"
+                                app:strokeWidth="0dp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/reverse"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/middle"
+                                app:cardCornerRadius="20dp"
+                                app:strokeWidth="0dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    app:cardBackgroundColor="@color/max"
+                    app:strokeColor="@color/middle">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/middle"
+                                app:cardCornerRadius="20dp"
+                                app:strokeWidth="0dp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/reverse"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/middle"
+                                app:cardCornerRadius="20dp"
+                                app:strokeWidth="0dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@color/middle" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_margin="10dp"
+                                    app:cardBackgroundColor="@color/middle"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeWidth="0dp"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:layout_width="0dp"
+                                        android:layout_height="20dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="@color/middle"
+                                        app:cardCornerRadius="20dp"
+                                        app:strokeWidth="0dp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:maxLines="2"
+                                        android:textColor="@color/reverse"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end"
+                                        android:orientation="vertical"
+                                        tools:ignore="TooManyViews">
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="20dp"
+                                            android:layout_marginStart="50dp"
+                                            android:layout_marginTop="4dp"
+                                            app:cardBackgroundColor="@color/middle"
+                                            app:cardCornerRadius="20dp"
+                                            app:strokeWidth="0dp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shadow_gradient" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/middle"
+        android:contentDescription="@string/app_name" />
+
+</FrameLayout>

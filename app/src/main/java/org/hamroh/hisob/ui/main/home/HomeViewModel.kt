@@ -19,18 +19,15 @@ class HomeViewModel @Inject constructor(private val repository: TransactionRepos
     }
 
     fun addTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.addTransaction(transaction) }
-        getAllData()
+        viewModelScope.launch { repository.addTransaction(transaction);getAllData() }
     }
 
     fun updateTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.updateTransaction(transaction) }
-        getAllData()
+        viewModelScope.launch { repository.updateTransaction(transaction);getAllData() }
     }
 
     fun deleteTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.deleteTransaction(transaction) }
-        getAllData()
+        viewModelScope.launch { repository.deleteTransaction(transaction);getAllData() }
     }
 
 }

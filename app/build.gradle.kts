@@ -13,8 +13,8 @@ android {
         applicationId ="org.hamroh.hisob"
         minSdk =24
         targetSdk =34
-        versionCode =16
-        versionName ="1.1.6"
+        versionCode =17
+        versionName ="1.1.7"
 
         testInstrumentationRunner="androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,5 +64,8 @@ dependencies {
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.49")
     ksp("com.google.dagger:hilt-android-compiler:2.49")
+
+    // Shimmer
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 
 }
