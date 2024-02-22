@@ -13,8 +13,8 @@ android {
         applicationId ="org.hamroh.hisob"
         minSdk =24
         targetSdk =34
-        versionCode =17
-        versionName ="1.1.7"
+        versionCode =18
+        versionName ="1.1.8"
 
         testInstrumentationRunner="androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,8 +53,8 @@ dependencies {
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
 
     // Navigation
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.6")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     // Room dependencies
     implementation ("androidx.room:room-runtime:2.6.1")

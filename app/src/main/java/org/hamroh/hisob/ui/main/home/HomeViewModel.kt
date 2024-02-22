@@ -12,10 +12,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: TransactionRepository) : ViewModel() {
 
-    val days = MutableLiveData<ArrayList<Transaction>>()
+    val transactions = MutableLiveData<ArrayList<Transaction>>()
 
     fun getAllData() {
-        viewModelScope.launch { days.postValue(ArrayList(repository.readAllData())) }
+        viewModelScope.launch { transactions.postValue(ArrayList(repository.readAllData())) }
     }
 
     fun addTransaction(transaction: Transaction) {

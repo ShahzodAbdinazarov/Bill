@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.transaction.Transaction
@@ -12,16 +14,14 @@ import org.hamroh.hisob.databinding.ItemTransactionBinding
 import org.hamroh.hisob.infra.utils.moneyFormat
 import org.hamroh.hisob.infra.utils.timeFormat
 
-class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DIFF_UTIL()) {
 
-    var items: ArrayList<Transaction> = arrayListOf()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    private class DIFF_UTIL : DiffUtil.ItemCallback<Transaction>() {
+        override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean = oldItem.time == newItem.time
+        override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean = oldItem == newItem
+    }
 
-    class ViewHolder(private var context: Context, private val binding: ItemTransactionBinding, onItemClick: ((Transaction) -> Unit)? = null) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemTransactionBinding, private val onItemClick: ((Transaction) -> Unit)?, private val context: Context) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var transaction: Transaction
 
@@ -82,9 +82,8 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.context, ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClick, parent.context)
 
-    override fun getItemCount() = items.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 }
+

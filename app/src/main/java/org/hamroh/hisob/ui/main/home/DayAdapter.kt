@@ -41,10 +41,10 @@ class DayAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : Lis
 
         private fun setupDays(transactions: ArrayList<Transaction>) {
             val transactionAdapter = TransactionAdapter { onItemClick?.invoke(it) }
-
+            transactionAdapter.submitList(transactions)
             binding.rvTransaction.apply {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-                adapter = transactionAdapter.apply { items = transactions }
+                adapter = transactionAdapter
             }
         }
 

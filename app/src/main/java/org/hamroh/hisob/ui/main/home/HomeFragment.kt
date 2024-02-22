@@ -14,7 +14,7 @@ import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.FragmentHomeBinding
 import org.hamroh.hisob.infra.utils.SharedPrefs
-import org.hamroh.hisob.infra.utils.filterla
+import org.hamroh.hisob.infra.utils.doFilter
 import org.hamroh.hisob.infra.utils.getAmount
 import org.hamroh.hisob.infra.utils.moneyFormat
 import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
@@ -27,10 +27,17 @@ import org.hamroh.hisob.ui.main.profile.ProfileDialog
 class HomeFragment : Fragment() {
 
     private val binding get() = _binding!!
-    private var _binding: FragmentHomeBinding? = null
-    private var currentAmount = 0.0
+    private var transactionList = arrayListOf<Transaction>()
     private val viewModel: HomeViewModel by viewModels()
+    private var dayAdapter: DayAdapter = DayAdapter()
+    private var _binding: FragmentHomeBinding? = null
     private var allFilter = AllFilter()
+    private var currentAmount = 0.0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getAllData()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -43,7 +50,7 @@ class HomeFragment : Fragment() {
         binding.fab.setOnClickListener {
             val addTransaction = AddTransactionDialog()
             addTransaction.currentAmount = currentAmount
-            addTransaction.onInsert = viewModel::addTransaction
+            addTransaction.onInsert = ::addTransaction
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
 
@@ -95,21 +102,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTransactionList() {
-        val transactions = DayAdapter(::openEdit)
-        viewModel.days.observe(viewLifecycleOwner) {
-            val list = it.filterla(allFilter)
-            transactions.submitList(list)
-            binding.rvTransaction.post {
-                currentAmount = list.getAmount()
-                binding.current.text = currentAmount.moneyFormat()
-                binding.rvTransaction.smoothScrollToPosition(0)
-                binding.shimmer.stopShimmer()
-                binding.shimmer.visibility = View.GONE
-            }
-        }
+        dayAdapter = DayAdapter(::openEdit)
+        viewModel.transactions.observe(viewLifecycleOwner, ::submitList)
         binding.rvTransaction.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            adapter = transactions
+            adapter = dayAdapter
         }
     }
 
@@ -120,6 +117,27 @@ class HomeFragment : Fragment() {
         editTransaction.onDelete = viewModel::deleteTransaction
         editTransaction.onUpdate = viewModel::updateTransaction
         editTransaction.show(requireActivity().supportFragmentManager, "EditTransactionDialog")
+    }
+
+    private fun submitList(it: java.util.ArrayList<Transaction>) {
+        transactionList = it
+        dayAdapter.submitList(transactionList.doFilter(allFilter))
+        //Todo: Bu yerda qo'shilgan yoki o'zgargan transactionni indexini aniqlashim kerak va
+
+        binding.rvTransaction.post {
+            currentAmount = transactionList.doFilter(allFilter).getAmount()
+            binding.current.text = currentAmount.moneyFormat()
+            binding.shimmer.stopShimmer()
+            binding.shimmer.visibility = View.GONE
+            // TODO: bu yerda usha indexga scroll qilishim kerak
+        }
+    }
+
+    private fun addTransaction(it: Transaction) {
+        viewModel.addTransaction(it)
+        transactionList.add(it)
+        submitList(transactionList)
+
     }
 
 }

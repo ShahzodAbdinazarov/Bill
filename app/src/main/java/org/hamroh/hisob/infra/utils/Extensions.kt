@@ -31,7 +31,7 @@ fun getStartOfMonth(): Long {
 }
 */
 
-fun ArrayList<Transaction>.filterla(allFilter: AllFilter): ArrayList<DayModel> {
+fun ArrayList<Transaction>.doFilter(allFilter: AllFilter): ArrayList<DayModel> {
     val transactions = arrayListOf<Transaction>()
     val list = ArrayList(this)
     for (i in 0 until list.size) {
