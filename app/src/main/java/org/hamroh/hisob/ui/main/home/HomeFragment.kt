@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
 
         binding.fab.setOnClickListener {
             val addTransaction = AddTransactionDialog()
-            addTransaction.currentAmount = currentAmount
             addTransaction.onInsert = ::addTransaction
             addTransaction.show(requireActivity().supportFragmentManager, "AddTransactionDialog")
         }
@@ -112,7 +111,6 @@ class HomeFragment : Fragment() {
 
     private fun openEdit(it: Transaction) {
         val editTransaction = EditTransactionDialog()
-        editTransaction.currentAmount = currentAmount
         editTransaction.transaction = it
         editTransaction.onDelete = viewModel::deleteTransaction
         editTransaction.onUpdate = viewModel::updateTransaction

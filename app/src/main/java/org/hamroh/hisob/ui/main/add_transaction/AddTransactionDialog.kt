@@ -25,7 +25,6 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
     private var selectTime: Long = System.currentTimeMillis()
     var onInsert: ((Transaction) -> Unit)? = null
     private var type: Int = -1
-    var currentAmount = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,12 +83,7 @@ class AddTransactionDialog : BottomSheetDialogFragment() {
             binding.etAmount.error = "Mablag‘ni kiriting!"
             binding.etAmount.requestFocus()
             false
-        } else if (binding.etAmount.text.toString().getDouble() > currentAmount && (type == 0 || type == 3 || type == 4)) {
-            binding.etAmount.error = "Yetarli mablag‘ mavjud emas!"
-            binding.etAmount.requestFocus()
-            false
         } else true
-
     }
 
     private fun clearType() {
