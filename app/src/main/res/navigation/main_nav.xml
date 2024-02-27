@@ -34,5 +34,10 @@
         android:name="org.hamroh.hisob.ui.main.filter.FilterDialog"
         android:label="fragment_filter"
         tools:layout="@layout/fragment_filter" />
+    <fragment
+        android:id="@+id/tagFragment"
+        android:name="org.hamroh.hisob.ui.main.tag.TagFragment"
+        android:label="fragment_tag"
+        tools:layout="@layout/fragment_tag" />
 
 </navigation>

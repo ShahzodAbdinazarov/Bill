@@ -13,8 +13,8 @@ android {
         applicationId ="org.hamroh.hisob"
         minSdk =24
         targetSdk =34
-        versionCode =19
-        versionName ="1.1.9"
+        versionCode =20
+        versionName ="1.2.0"
 
         testInstrumentationRunner="androidx.test.runner.AndroidJUnitRunner"
     }

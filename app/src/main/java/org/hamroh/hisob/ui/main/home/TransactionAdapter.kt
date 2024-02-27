@@ -1,7 +1,6 @@
 package org.hamroh.hisob.ui.main.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -11,17 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import org.hamroh.hisob.R
 import org.hamroh.hisob.data.transaction.Transaction
 import org.hamroh.hisob.databinding.ItemTransactionBinding
+import org.hamroh.hisob.infra.utils.extractAndSetClickableTags
 import org.hamroh.hisob.infra.utils.moneyFormat
 import org.hamroh.hisob.infra.utils.timeFormat
 
-class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = null) : ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DIFF_UTIL()) {
+class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = null, private var onTagClick: ((String) -> Unit)? = null) :
+    ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DIFF_UTIL()) {
 
     private class DIFF_UTIL : DiffUtil.ItemCallback<Transaction>() {
         override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean = oldItem.time == newItem.time
         override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean = oldItem == newItem
     }
 
-    class ViewHolder(private val binding: ItemTransactionBinding, private val onItemClick: ((Transaction) -> Unit)?, private val context: Context) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemTransactionBinding, private val onItemClick: ((Transaction) -> Unit)?, private val onTagClick: ((String) -> Unit)?) :
+        RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var transaction: Transaction
 
@@ -35,7 +37,7 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
 
             binding.tvAmount.text = transaction.amount.moneyFormat()
             binding.tvTime.text = transaction.time.timeFormat("HH:mm")
-            binding.tvNote.text = transaction.note
+            binding.tvNote.extractAndSetClickableTags(transaction.note, { onTagClick?.invoke(it) }) { onItemClick?.invoke(transaction) }
 
             setupType()
             setupAmountColor()
@@ -58,12 +60,12 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
 
         private fun setupAmountColor() {
             when (transaction.type) {
-                0 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.expense))
-                1 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.income))
-                2 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.borrow))
-                3 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.borrow))
-                4 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.lending))
-                5 -> binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.lending))
+                0 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.expense))
+                1 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.income))
+                2 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.borrow))
+                3 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.borrow))
+                4 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.lending))
+                5 -> binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.lending))
                 else -> {}
             }
         }
@@ -82,7 +84,7 @@ class TransactionAdapter(private var onItemClick: ((Transaction) -> Unit)? = nul
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClick, parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false), onItemClick, onTagClick)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 }

@@ -6,9 +6,15 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import org.hamroh.hisob.data.AllFilter
 import org.hamroh.hisob.data.DayModel
 import org.hamroh.hisob.data.transaction.Transaction
@@ -31,6 +37,43 @@ fun getStartOfMonth(): Long {
 }
 */
 
+@SuppressLint("ClickableViewAccessibility")
+fun TextView.extractAndSetClickableTags(desc: String, onTagClick: ((String) -> Unit)? = null, onNonTagClick: (() -> Unit)? = null) {
+    val tagPattern = Regex("#\\w+")
+    val spannableStringBuilder = SpannableStringBuilder(desc)
+    tagPattern.findAll(desc).forEach { tagResult ->
+        val tag = tagResult.value // Extract tag as a string
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                onTagClick?.invoke(tag) // Pass tag to the lambda
+            }
+        }
+        spannableStringBuilder.setSpan(
+            clickableSpan,
+            tagResult.range.first,
+            tagResult.range.last + 1,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+    text = spannableStringBuilder
+    movementMethod = LinkMovementMethod.getInstance()
+
+    setOnTouchListener { v, event ->
+        if (event.action == MotionEvent.ACTION_UP) {
+            val x = event.x.toInt()
+            val y = event.y.toInt()
+            val layout = (v as TextView).layout
+            val line = layout.getLineForVertical(y)
+            val off = layout.getOffsetForHorizontal(line, x.toFloat())
+            val link = spannableStringBuilder.getSpans(off, off, ClickableSpan::class.java)
+            if (link.isEmpty()) {
+                onNonTagClick?.invoke()
+            }
+        }
+        false
+    }
+}
+
 fun ArrayList<Transaction>.doFilter(allFilter: AllFilter): ArrayList<DayModel> {
     val transactions = arrayListOf<Transaction>()
     val list = ArrayList(this)
@@ -47,6 +90,12 @@ fun ArrayList<Transaction>.doFilter(allFilter: AllFilter): ArrayList<DayModel> {
         }
     }
     return transactions.getDays()
+}
+
+fun ArrayList<Transaction>.doTagFilter(allFilter: AllFilter): List<Transaction> {
+    return filter { transaction ->
+        transaction.time in allFilter.timeFilter.fromTime..allFilter.timeFilter.toTime && transaction.note.contains(allFilter.tag)
+    }
 }
 
 fun String.getDouble(): Double {
@@ -173,7 +222,8 @@ fun ArrayList<Transaction>.getDays(): ArrayList<DayModel> {
     }
     for (j in 0 until helperList.size) if (helperList[j].type == 0 || helperList[j].type == 3 || helperList[j].type == 4)
         helperAmount -= helperList[j].amount else helperAmount += helperList[j].amount
-    if (this.size > 1) dayList.add(DayModel(time = this[this.size - 1].time, transactions = helperList, amount = helperAmount))
+
+    if (this.size > 0) dayList.add(DayModel(time = this[this.size - 1].time, transactions = helperList, amount = helperAmount))
 
     return dayList
 }

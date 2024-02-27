@@ -26,5 +26,6 @@ data class TimeFilter(
 data class AllFilter(
     var typeFilter: TypeFilter = TypeFilter(),
     var timeFilter: TimeFilter = TimeFilter(),
+    var tag: String = "",
 )
 

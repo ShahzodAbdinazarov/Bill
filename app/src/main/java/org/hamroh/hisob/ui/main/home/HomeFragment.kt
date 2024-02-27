@@ -21,6 +21,7 @@ import org.hamroh.hisob.ui.main.add_transaction.AddTransactionDialog
 import org.hamroh.hisob.ui.main.edit_transaction.EditTransactionDialog
 import org.hamroh.hisob.ui.main.filter.FilterDialog
 import org.hamroh.hisob.ui.main.profile.ProfileDialog
+import org.hamroh.hisob.ui.main.tag.TagFragment
 
 
 @AndroidEntryPoint
@@ -101,12 +102,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTransactionList() {
-        dayAdapter = DayAdapter(::openEdit)
+        dayAdapter = DayAdapter(::openEdit, ::openTag)
         viewModel.transactions.observe(viewLifecycleOwner, ::submitList)
         binding.rvTransaction.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             adapter = dayAdapter
         }
+    }
+
+    private fun openTag(tag: String) {
+        val tagFragment = TagFragment()
+        tagFragment.selectedTag = tag
+        tagFragment.show(requireActivity().supportFragmentManager, "TagFragment")
     }
 
     private fun openEdit(it: Transaction) {
